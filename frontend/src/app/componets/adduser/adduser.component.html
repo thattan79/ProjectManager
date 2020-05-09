@@ -1,0 +1,57 @@
+<div class="row">
+  <div class="col-xs-12 col-sm-offset-0" style="padding-left: 4%">
+    <form #userForm="ngForm" (ngSubmit)="onSubmit()">
+      <table class="table-responsive">
+        <tr>
+          <td>First Name:</td>
+          <td><input type="text" class="form-control" style="margin-left:10%;width: 220%;" name="firstName"
+                     [(ngModel)]="userDto.firstName" required #firstName="ngModel">
+            <input type="hidden" [(ngModel)]="userDto.userId" name="userId">
+          </td>
+        </tr>
+        <tr *ngIf="firstName.touched && firstName.invalid">
+          <td></td>
+          <td class="error">First name is mandatory</td>
+        </tr>
+        <tr>
+          <td style="padding-top: 5%"></td>
+        </tr>
+        <tr>
+          <td>Last Name:</td>
+          <td>
+            <input type="text" name="lastName" class="form-control" [(ngModel)]="userDto.lastName"
+                   required #lastName="ngModel" style="margin-left:10%;width: 220%;">
+          </td>
+        </tr>
+        <tr *ngIf="lastName.touched && lastName.invalid">
+          <td></td>
+          <td class="error">Please enter last name</td>
+        </tr>
+        <tr>
+          <td style="padding-top: 5%"></td>
+        </tr>
+        <tr>
+          <td>Employee Id:</td>
+          <td>
+            <input type="text" name="employeeId" class="form-control" required #employeeId="ngModel"
+                   [(ngModel)]="userDto.employeeId" style="margin-left:10%;width: 100%;">
+          </td>
+        </tr>
+        <tr *ngIf="employeeId.touched && employeeId.invalid">
+          <td></td>
+          <td class="error">Please enter employee id</td>
+        </tr>
+      </table>
+      <div style="margin-left: 40%;margin-top: 3%">
+        <button type="submit" class="btn btn-primary" [disabled]="!userForm.valid && !edit"
+                style="margin-right: 2%;padding-left: 3%;padding-right: 3%;">
+          {{edit ? 'Update' : '&nbsp;Add&nbsp;'}}
+        </button>
+        <button type="button" class="btn btn-primary" style="padding-left: 3%;padding-right: 3%;" (click)="onReset();">
+          Reset
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+<app-listuser [userDto]="userDto"></app-listuser>
