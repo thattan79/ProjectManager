@@ -148,7 +148,7 @@
           <td>{{user.firstName}}</td>
           <td>{{user.lastName}}</td>
           <td>{{user.employeeId}}</td>
-          <td style="padding-left: 4%"><input type="radio" (click)="selectUser(user)"></td>
+          <td style="padding-left: 4%"><input type="radio" name="userRadio" (click)="selectUser(user)"></td>
         </tr>
         </tbody>
       </table>
@@ -188,7 +188,7 @@
           <td>{{project.startDate}}</td>
           <td>{{project.endDate}}</td>
           <td>{{project.priority}}</td>
-          <td style="padding-left: 4%"><input type="radio" (click)="selectProject(project)"></td>
+          <td style="padding-left: 4%"><input type="radio"  name="projectRadio" (click)="selectProject(project)"></td>
         </tr>
         </tbody>
       </table>
@@ -222,7 +222,7 @@
         <tbody>
         <tr *ngFor="let parent of parentTaskDtos">
           <td>{{parent.parentTaskName}}</td>
-          <td style="padding-left: 4%"><input type="radio" (click)="selectParentTask(parent)"></td>
+          <td style="padding-left: 4%"><input type="radio" name="parentTaskRadio" (click)="selectParentTask(parent)"></td>
         </tr>
         </tbody>
       </table>

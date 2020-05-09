@@ -3,4 +3,5 @@ export class UserDto {
   public firstName: string;
   public lastName: string;
   public employeeId: string;
+  public edit: boolean = false;
 }

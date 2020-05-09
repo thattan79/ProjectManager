@@ -45,7 +45,7 @@
       <div style="margin-left: 40%;margin-top: 3%">
         <button type="submit" class="btn btn-primary" [disabled]="!userForm.valid"
                 style="margin-right: 2%;padding-left: 3%;padding-right: 3%;">
-          {{edit ? 'Update' : '&nbsp;Add&nbsp;'}}
+          {{userDto.edit ? 'Update' : '&nbsp;Add&nbsp;'}}
         </button>
         <button type="button" class="btn btn-primary" style="padding-left: 3%;padding-right: 3%;" (click)="onReset();">
           Reset

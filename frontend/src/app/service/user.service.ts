@@ -8,7 +8,6 @@ import {Observable} from "rxjs";
 })
 export class UserService {
 
-  @Output()
   public usersEmitter: EventEmitter<UserDto> = new EventEmitter<UserDto>()
 
   constructor(private http: HttpClient) {

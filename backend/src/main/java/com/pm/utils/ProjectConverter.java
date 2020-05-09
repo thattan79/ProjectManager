@@ -3,7 +3,9 @@ package com.pm.utils;
 
 import com.pm.dto.ProjectDto;
 import com.pm.dto.TaskDto;
+import com.pm.dto.UserDto;
 import com.pm.entity.Project;
+import com.pm.entity.User;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
@@ -16,6 +18,9 @@ public class ProjectConverter {
 
     @Resource
     private TaskConverter taskConverter;
+
+    @Resource
+    private UserConverter userConverter;
 
     public Project saveProject(ProjectDto projectDto) {
         return createProjectFromDto(projectDto);
@@ -41,6 +46,11 @@ public class ProjectConverter {
         projectDto.setPriority(project.getPriority());
         if (project.getProjectId() > 0) {
             projectDto.setProjectId(project.getProjectId());
+        }
+        List<User> users = project.getUsers();
+        if (users != null && users.size() > 0) {
+            List<UserDto> userDtos = userConverter.convertUserListToDtoList(users);
+            projectDto.setUserDtos(userDtos);
         }
         return projectDto;
     }

@@ -28,7 +28,7 @@ export class ProjectService {
   }
 
   findProjectById(id: number): Observable<ProjectDto> {
-    return this.http.get<ProjectDto>("http://localhost:8081/project/findProject/" + id);
+    return this.http.get<ProjectDto>("http://localhost:8081/project/findProjectById/" + id);
   }
 
   deleteProject(id: number): Observable<ProjectDto> {

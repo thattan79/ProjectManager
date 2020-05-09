@@ -55,7 +55,7 @@ public class ProjectServiceImpl implements IProjectService {
         return new ArrayList<>();
     }
 
-    public ProjectDto findById(Long id) {
+    public ProjectDto findProjectById(Long id) {
         Optional<Project> optProject = projectRepository.findById(id);
         if (optProject.isPresent()) {
             return projectConverter.convertProjectToDto(optProject.get());

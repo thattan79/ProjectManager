@@ -25,10 +25,10 @@
           <td></td>
           <td style="width: 7%;"></td>
           <td colspan="3" style="padding-top: 3%">
-            <input id="checkId" type="checkbox" style="width: 25px; height: 25px;" ngModel name="startEndDate"
-                   #startEndDate="ngModel"
-                   (change)="setDateField()" [checked]="setStartAndEndDate"/>
-            <label for="checkId" style="font-size: 87%;font-weight: normal;">Set Start and End Date</label>
+            <input id="checkId" type="checkbox" style="width: 25px; height: 25px;"
+                   ngModel name="startEndDateCheckBox"
+                   #startEndDateCheckBox="ngModel" (change)="setDateField()"/>
+            <label for="checkId" style="font-size: 87%;font-weight: normal;">Set Start and End Datee</label>
           </td>
           <td>
             <input type="text" placeholder="Start Date" id="sDate" (change)="removeBorderColor();"
@@ -47,6 +47,11 @@
           <td></td>
           <td style="width: 7%;"></td>
           <td colspan="3" style="padding-bottom: 3%" class="error">End date is not before start date</td>
+        </tr>
+        <tr *ngIf="startEndDateCheckBox.errors?.emptyDate">
+          <td></td>
+          <td style="width: 7%;"></td>
+          <td colspan="3" style="padding-bottom: 3%" class="error">Dates are mandatory</td>
         </tr>
         <tr>
           <td>Priority:</td>
@@ -77,7 +82,7 @@
             </div>
           </td>
         </tr>
-        <tr *ngIf="manager.touched && manager.errors?.inValidManager">
+        <tr *ngIf="manager.errors?.inValidManager">
           <td></td>
           <td style="width: 7%;"></td>
           <td colspan="3" class="error">Please select Manager</td>
@@ -89,7 +94,9 @@
                 [disabled]="!projectForm.valid && !edit ">
           {{edit ? 'Update' : '&nbsp;Add&nbsp;'}}
         </button>
-        <button type="button" class="btn btn-primary" style="padding-left: 3%;padding-right: 3%;">Reset</button>
+        <button type="button" class="btn btn-primary" style="padding-left: 3%;padding-right: 3%;" (click)="onReset();">
+          Reset
+        </button>
       </div>
     </form>
   </div>
@@ -113,7 +120,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr *ngFor="let user of userDtos">123
+        <tr *ngFor="let user of userDtos">
           <td>{{user?.firstName}}</td>
           <td>{{user?.lastName}}</td>
           <td>{{user?.employeeId}}</td>
@@ -121,7 +128,7 @@
         </tr>
         </tbody>
       </table>
-      <div style="padding-left: 34%;font-size: medium;padding-bottom: 2%;"  *ngIf="userDtos.length<=0">
+      <div style="padding-left: 34%;font-size: medium;padding-bottom: 2%;" *ngIf="userDtos.length<=0">
         No User Found
       </div>
       <div class="modal-footer">

@@ -20,7 +20,7 @@ public class ProjectDto {
     public LocalDate endDate;
     public int priority;
     public long userId;
-    //public UserDto userDto = new UserDto();
+    public List<UserDto> userDtos = new ArrayList<>();
     public List<TaskDto> taskDtos = new ArrayList<>();
     public int totalNoOfTasks;
     public int totalNoOfCompletedTasks;

@@ -25,7 +25,6 @@ export class AdduserComponent implements OnInit {
     this.userService.usersEmitter.subscribe(
       (userDto: UserDto) => {
         this.userDto = userDto;
-        this.edit = true;
       }
     )
   }

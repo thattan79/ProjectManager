@@ -8,6 +8,7 @@ export class ProjectDto {
   public endDate: string;
   public priority: number;
   public userId: number;
+  public userDtos: UserDto[];
   public taskDtos: TaskDto[];
   public totalNoOfTasks: number;
   public totalNoOfCompletedTasks: number;

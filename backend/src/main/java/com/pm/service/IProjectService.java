@@ -15,7 +15,7 @@ public interface IProjectService {
 
     List<ProjectDto> findAllProjectByInput(String input);
 
-    ProjectDto findById(Long id);
+    ProjectDto findProjectById(Long id);
 
     ProjectDto deleteProject(Long id);
 }

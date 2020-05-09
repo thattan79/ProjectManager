@@ -1,7 +1,6 @@
-import {Component, Input, OnChanges, SimpleChanges, ViewChild} from '@angular/core';
+import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
 import {UserService} from "../../service/user.service";
 import {UserDto} from "../../dto/user.dto";
-import {NgForm} from "@angular/forms";
 import {UserSortService} from "../../service/user-sort.service";
 
 @Component({
@@ -11,7 +10,6 @@ import {UserSortService} from "../../service/user-sort.service";
 })
 export class ListuserComponent implements OnChanges {
 
-  @ViewChild('userForm') userForm: NgForm;
   @Input('userDto') userDto: UserDto
   userDtos: UserDto[] = [];
   search: boolean = false;
@@ -53,6 +51,7 @@ export class ListuserComponent implements OnChanges {
   onEdit(id: number) {
     this.userService.findUserById(id).subscribe(
       (userDto: UserDto) => {
+        userDto.edit = true;
         this.userService.usersEmitter.emit(userDto)
       }
     )
@@ -61,8 +60,11 @@ export class ListuserComponent implements OnChanges {
   onDelete(id: number) {
     this.userService.deleteUser(id).subscribe(
       (userDto: UserDto) => {
+        userDto.firstName = '';
+        userDto.lastName = '';
+        userDto.employeeId = '';
+        userDto.edit = false;
         this.userService.usersEmitter.emit(userDto)
-        this.userForm.reset();
       }
     );
   }

@@ -30,9 +30,9 @@ public class ProjectController {
         return projectServiceImpl.findAllProjectByInput(input);
     }
 
-    @GetMapping("/findProject/{id}")
-    public ProjectDto findProject(@PathVariable("id") Long id) {
-        return projectServiceImpl.findById(id);
+    @GetMapping("/findProjectById/{id}")
+    public ProjectDto findProjectById(@PathVariable("id") Long id) {
+        return projectServiceImpl.findProjectById(id);
     }
 
     @PostMapping("/delete")

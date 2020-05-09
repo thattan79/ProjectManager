@@ -25,7 +25,7 @@ export class AddprojectComponent implements OnInit {
   userDto: UserDto;
   search: boolean = false;
   edit: boolean = false;
-  setStartAndEndDate: boolean = false;
+  startEndDateCheckBox: boolean = false;
 
   value: number = 100;
   options: Options = {
@@ -67,6 +67,7 @@ export class AddprojectComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log(this.startEndDateCheckBox)
     this.userService.findAllUser().subscribe(
       (userDtos: UserDto[]) => {
         this.userDtos = userDtos;
@@ -83,12 +84,14 @@ export class AddprojectComponent implements OnInit {
         this.projectForm.control.get('endDate').setValue(projectDto.endDate);
         this.projectForm.control.get('priority').setValue(projectDto.priority);
         this.projectForm.control.get('projectId').setValue(projectDto.projectId);
+        this.projectForm.control.get('manager').setValue(projectDto.userDtos[0].firstName);
+        this.projectForm.control.get('startEndDateCheckBox').setValue(true);
       }
     )
   }
 
   setDateField() {
-    if (this.projectForm.control.get('startEndDate').value) {
+    if (this.projectForm.control.get('startEndDateCheckBox').value) {
       this.dateFieldActive = false;
       const startDate = this.datePipe.transform(new Date(), 'yyyy-MM-dd');
       const date = new Date();
@@ -96,11 +99,10 @@ export class AddprojectComponent implements OnInit {
       const endDate = this.datePipe.transform(date, 'yyyy-MM-dd');
       this.projectForm.control.get('startDate').setValue(startDate);
       this.projectForm.control.get('endDate').setValue(endDate);
-    }else{
+    } else {
       this.dateFieldActive = true;
       this.projectForm.control.get('startDate').setValue('');
       this.projectForm.control.get('endDate').setValue('');
-
     }
   }
 
@@ -109,6 +111,7 @@ export class AddprojectComponent implements OnInit {
     const endDateRef = this.projectForm.control.get('endDate');
     const priorityRef = this.projectForm.control.get('priority');
     const managerRef = this.projectForm.control.get('manager');
+    const startEndDateCheckBoxRef = this.projectForm.control.get('startEndDateCheckBox');
 
     const d1 = new Date(startDateRef.value);
     const d2 = new Date(endDateRef.value);
@@ -121,19 +124,26 @@ export class AddprojectComponent implements OnInit {
       endDateRef.setErrors({
         'invalidDate': true
       });
-      return;
     }
 
     if (priority <= 0) {
       priorityRef.setErrors({
         'invalidPriority': true
       });
-      return;
     }
     if (managerRef.value === '') {
       managerRef.setErrors({
         'inValidManager': true
       });
+    }
+    if (!startEndDateCheckBoxRef.value) {
+      this.projectForm.control.get('startEndDateCheckBox').setErrors(
+        {
+          'emptyDate': true
+        }
+      )
+    }
+    if ((d1 > d2) || (managerRef.value === '') || (priority <= 0) || !startEndDateCheckBoxRef.value) {
       return;
     }
     this.projectDto = new ProjectDto();
@@ -165,6 +175,10 @@ export class AddprojectComponent implements OnInit {
   selectUser(userDto: UserDto) {
     this.userDto = userDto;
     this.projectForm.control.get('manager').setValue(userDto.firstName);
+    this.projectForm.control.get('manager').setErrors(null);
   }
 
+  onReset() {
+    this.projectForm.reset();
+  }
 }
