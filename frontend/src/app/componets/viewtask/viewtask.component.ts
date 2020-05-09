@@ -20,7 +20,7 @@ export class ViewtaskComponent implements OnInit {
   bsModalRef: BsModalRef;
   projectDto: ProjectDto;
   projectName: string;
-
+  display: boolean = false;
   @ViewChild('viewTaskForm') viewTaskForm: NgForm;
 
   constructor(private projectService: ProjectService,
@@ -66,6 +66,7 @@ export class ViewtaskComponent implements OnInit {
   }
 
   displayTasks() {
+    this.display = true;
     this.taskDtos = this.projectDto.taskDtos;
   }
 

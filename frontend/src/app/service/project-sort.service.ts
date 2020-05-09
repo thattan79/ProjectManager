@@ -34,6 +34,12 @@ export class ProjectSortService {
         const d2: number = b.priority
         return (d1 - d2)
       })
+    }else if ("completed" === field) {
+      return this.projectDtos.sort(function (a, b): any {
+        const d1: number = a.totalNoOfCompletedTasks
+        const d2: number = b.totalNoOfCompletedTasks
+        return (d1 - d2)
+      })
     }
   }
 }
