@@ -13,8 +13,6 @@ export class ListprojectComponent implements OnChanges {
   @Input('projectDto') projectDto: ProjectDto
   projectDtos: ProjectDto[] = [];
   search: boolean = false;
-  noOfTasks: number = 0;
-  taskCompleted: number = 0;
 
   _searchVal: string;
   get searchVal(): string {
@@ -47,21 +45,6 @@ export class ListprojectComponent implements OnChanges {
     this.projectService.findAllProjects().subscribe(
       (projectDtos: ProjectDto[]) => {
         this.projectDtos = projectDtos;
-        /*        this.projectDtos.forEach(
-                  (projectDto) => {
-                    this.taskCompleted = 0;
-                    this.noOfTasks = projectDto.taskDtos.length;
-                    projectDto.totalNoOfTasks = this.noOfTasks;
-                    projectDto.taskDtos.forEach(
-                      (taskDto: TaskDto) => {
-                        if (taskDto.status === 'COMPLETED') {
-                          this.taskCompleted = this.taskCompleted + 1;
-                        }
-                      }
-                    )
-                    projectDto.totalNoOfCompletedTasks = this.taskCompleted;
-                  }
-                )*/
       }
     )
   }

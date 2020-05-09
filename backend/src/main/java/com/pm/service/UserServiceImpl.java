@@ -4,6 +4,7 @@ import com.pm.dto.UserDto;
 import com.pm.entity.User;
 import com.pm.repository.UserRepository;
 import com.pm.utils.UserConverter;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,6 +14,7 @@ import java.util.Optional;
 
 @Service
 @Transactional
+@Slf4j
 public class UserServiceImpl implements IUserService {
 
     @Resource
@@ -21,6 +23,7 @@ public class UserServiceImpl implements IUserService {
     private UserConverter userConverter;
 
     public UserDto createUser(UserDto userDto) {
+        log.info("-createUser-");
         final User user = userConverter.createUser(userDto);
         userRepository.save(user);
         return userDto;
@@ -31,6 +34,7 @@ public class UserServiceImpl implements IUserService {
     }
 
     public List<UserDto> findAllUserByInput(String input) {
+        log.info("-findAllUserByInput-");
         List<User> users;
         if ("default".equals(input)) {
             return findAllUser();
@@ -46,6 +50,7 @@ public class UserServiceImpl implements IUserService {
     }
 
     public UserDto findById(Long id) {
+        log.info("-User Service findById-");
         Optional<User> optUser = userRepository.findById(id);
         if (optUser.isPresent()) {
             return userConverter.convertUserToDto(optUser.get());
@@ -53,7 +58,9 @@ public class UserServiceImpl implements IUserService {
         return new UserDto();
     }
 
+    @Transactional
     public UserDto deleteUser(Long id) {
+        log.info("-deleteUser-");
         final Optional<User> optUser = userRepository.findById(id);
         if (optUser.isPresent()) {
             userRepository.delete(optUser.get());

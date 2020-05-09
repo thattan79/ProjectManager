@@ -33,7 +33,7 @@
         <tr>
           <td>Employee Id:</td>
           <td>
-            <input type="text" name="employeeId" class="form-control" required #employeeId="ngModel"
+            <input type="number" name="employeeId" class="form-control" required #employeeId="ngModel"
                    [(ngModel)]="userDto.employeeId" style="margin-left:10%;width: 100%;">
           </td>
         </tr>
@@ -43,7 +43,7 @@
         </tr>
       </table>
       <div style="margin-left: 40%;margin-top: 3%">
-        <button type="submit" class="btn btn-primary" [disabled]="!userForm.valid && !edit"
+        <button type="submit" class="btn btn-primary" [disabled]="!userForm.valid"
                 style="margin-right: 2%;padding-left: 3%;padding-right: 3%;">
           {{edit ? 'Update' : '&nbsp;Add&nbsp;'}}
         </button>

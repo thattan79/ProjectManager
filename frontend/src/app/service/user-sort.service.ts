@@ -18,33 +18,35 @@ export class UserSortService {
   sortByUserField(field): UserDto[] {
     if ("firstName" === field) {
       return this.userDtos.sort(
-        (n1: UserDto, n2: UserDto) => {
-          if (n1.firstName > n2.firstName) {
+        (user1: UserDto, user2: UserDto) => {
+          if (user1.firstName > user2.firstName) {
             return 1;
           }
-          if (n1.firstName < n2.firstName) {
+          if (user1.firstName < user2.firstName) {
             return -1;
           }
           return 0;
         });
     } else if ("lastName" === field) {
       return this.userDtos.sort(
-        (n1: UserDto, n2: UserDto) => {
-          if (n1.lastName > n2.lastName) {
+        (user1: UserDto, user2: UserDto) => {
+          if (user1.lastName > user2.lastName) {
             return 1;
           }
-          if (n1.lastName < n2.lastName) {
+          if (user1.lastName < user2.lastName) {
             return -1;
           }
           return 0;
         });
     } else {
       return this.userDtos.sort(
-        (n1: UserDto, n2: UserDto) => {
-          if (n1.employeeId > n2.employeeId) {
+        (user1: UserDto, user2: UserDto) => {
+          let user1EmployeeID = +user1.employeeId;
+          let user2EmployeeID = +user2.employeeId;
+          if (user1EmployeeID > user2EmployeeID) {
             return 1;
           }
-          if (n1.employeeId < n2.employeeId) {
+          if (user1EmployeeID < user2EmployeeID) {
             return -1;
           }
           return 0;

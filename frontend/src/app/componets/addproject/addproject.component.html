@@ -65,7 +65,7 @@
         </tr>
         <tr>
           <td>
-            <div style="height: 40px;">Manager:</div>
+            <div style="height: 40px;padding-top: 15%;">Manager:</div>
           </td>
           <td style="width: 7%;"></td>
           <td colspan="3"><input type="text" class="form-control" disabled name="manager" ngModel
@@ -113,7 +113,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr *ngFor="let user of userDtos">
+        <tr *ngFor="let user of userDtos">123
           <td>{{user?.firstName}}</td>
           <td>{{user?.lastName}}</td>
           <td>{{user?.employeeId}}</td>
@@ -121,6 +121,9 @@
         </tr>
         </tbody>
       </table>
+      <div style="padding-left: 34%;font-size: medium;padding-bottom: 2%;"  *ngIf="userDtos.length<=0">
+        No User Found
+      </div>
       <div class="modal-footer">
         <button class="btn btn-sm" (click)="bsModalRef.hide()">Submit</button>
         <button class="btn btn-sm" (click)="bsModalRef.hide()">close</button>

@@ -140,6 +140,9 @@
         </tr>
         </tbody>
       </table>
+      <div *ngIf="parentTaskDtos.length<=0" style="padding-left: 34%;font-size: medium;padding-bottom: 2%;">
+        No Parent Task Found
+      </div>
       <div class="modal-footer">
         <button class="btn btn-sm" (click)="bsModalRef.hide()">Submit</button>
         <button class="btn btn-sm" (click)="bsModalRef.hide()">close</button>

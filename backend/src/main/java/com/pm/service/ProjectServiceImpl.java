@@ -2,7 +2,6 @@ package com.pm.service;
 
 import com.pm.dto.ProjectDto;
 import com.pm.dto.TaskDto;
-import com.pm.dto.UserDto;
 import com.pm.entity.Project;
 import com.pm.entity.User;
 import com.pm.repository.ProjectRepository;
@@ -31,7 +30,6 @@ public class ProjectServiceImpl implements IProjectService {
         final Project project = projectConverter.saveProject(projectDto);
         Optional<User> userOpt = userRepository.findById(projectDto.getUserId());
         User user = null;
-        UserDto userDto = null;
         if (userOpt.isPresent()) {
             user = userOpt.get();
             project.addUser(user);
@@ -40,7 +38,6 @@ public class ProjectServiceImpl implements IProjectService {
         return projectDto;
     }
 
-    @Transactional
     public List<ProjectDto> findAllProjects() {
         List<ProjectDto> projectDtos = projectConverter.convertProjectListToDtoList(projectRepository.findAll());
         setCountOfTask(projectDtos);
@@ -59,15 +56,11 @@ public class ProjectServiceImpl implements IProjectService {
     }
 
     public ProjectDto findById(Long id) {
-        Optional<Project> pr = projectRepository.findById(id);
-        Project project = pr.get();
-        ProjectDto dto = new ProjectDto();
-        dto.setProjectTitle(project.getProjectTitle());
-        dto.setPriority(project.getPriority());
-        dto.setEndDate(project.getEndDate());
-        dto.setStartDate(project.getStartDate());
-        dto.setProjectId(project.getProjectId());
-        return dto;
+        Optional<Project> optProject = projectRepository.findById(id);
+        if (optProject.isPresent()) {
+            return projectConverter.convertProjectToDto(optProject.get());
+        }
+        return new ProjectDto();
     }
 
     private void setCountOfTask(List<ProjectDto> projectDtos) {
@@ -88,9 +81,7 @@ public class ProjectServiceImpl implements IProjectService {
 
     public ProjectDto deleteProject(Long id) {
         final Optional<Project> optProject = projectRepository.findById(id);
-        if (optProject.isPresent()) {
-            projectRepository.delete(optProject.get());
-        }
+        optProject.ifPresent(project -> projectRepository.delete(optProject.get()));
         return new ProjectDto();
     }
 }

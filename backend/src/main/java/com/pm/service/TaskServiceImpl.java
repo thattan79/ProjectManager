@@ -27,10 +27,9 @@ public class TaskServiceImpl implements ITaskService {
     @Resource
     private ParentTaskRepository parentTaskRepository;
     @Resource
-    private IProjectService projectServiceImpl;
-    @Resource
     private TaskConverter taskConverter;
 
+    @Transactional
     public ParentTask createParentTask(ParentTaskDto parentTaskDto) {
         final ParentTask parentTask = new ParentTask();
         parentTask.setParentTaskName(parentTaskDto.getParentTaskName());
@@ -39,17 +38,16 @@ public class TaskServiceImpl implements ITaskService {
     }
 
     public List<ParentTask> findAllParentTasks() {
-        List<ParentTask> parentTasks = parentTaskRepository.findAll();
-        return parentTasks;
+        return parentTaskRepository.findAll();
     }
 
-    @Transactional
     public TaskDto createTask(TaskDto taskDto) {
-        log.info("createTask-------------");
+        log.info("-createTask-");
         return saveTask(taskDto);
     }
 
     public TaskDto updateTaskStatus(TaskDto taskDto) {
+        log.info("-updateTaskStatus-");
         Optional<Task> optTask = taskRepository.findById(taskDto.getTaskId());
         if (optTask.isPresent()) {
             final Task task = optTask.get();
@@ -61,6 +59,7 @@ public class TaskServiceImpl implements ITaskService {
     }
 
     public TaskDto updateTask(TaskDto taskDto) {
+        log.info("-updateTask-");
         if (taskDto.getTaskId() > 0) {
             Optional<Task> optTask = taskRepository.findById(taskDto.getTaskId());
             if (optTask.isPresent()) {
@@ -75,8 +74,15 @@ public class TaskServiceImpl implements ITaskService {
         return taskDto;
     }
 
+    public List<ParentTask> findAllParentTasksByInput(String input) {
+        if ("default".equals(input)) {
+            return findAllParentTasks();
+        }
+        return parentTaskRepository.findByParentTaskNameContaining(input);
+    }
+
     private TaskDto saveTask(TaskDto taskDto) {
-        List<Task> allTasks = new ArrayList<Task>();
+        List<Task> allTasks = new ArrayList<>();
         final Task task = taskConverter.createTaskFromDto(taskDto);
 
         Optional<ParentTask> optParentTask = parentTaskRepository.findById(taskDto.getParentTaskId());
@@ -109,27 +115,4 @@ public class TaskServiceImpl implements ITaskService {
         taskRepository.save(task);
         return taskDto;
     }
-
-    public List<ParentTask> findAllParentTasksByInput(String input) {
-        if ("default".equals(input)) {
-            return findAllParentTasks();
-        }
-        return parentTaskRepository.findByParentTaskNameContaining(input);
-    }
-
-/*    public List<ProjectDto> findAllTasksByProject(String input) {
-        List<ProjectDto> projectDtos = projectServiceImpl.findAllProjectByInput(input);
-        for (ProjectDto projectDto : projectDtos) {
-            List<TaskDto> taskDtos = projectDto.getTaskDtos();
-            projectDto.setTotalNoOfTasks(taskDtos.size());
-            int noOfCompletedTasks = 0;
-            for (TaskDto taskDto : taskDtos) {
-                if ("COMPLETE".equals(taskDto.getStatus())) {
-                    noOfCompletedTasks = noOfCompletedTasks + 1;
-                }
-                projectDto.setTotalNoOfCompletedTasks(noOfCompletedTasks);
-            }
-        }
-        return projectDtos;
-    }*/
 }

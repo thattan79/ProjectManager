@@ -82,7 +82,6 @@ export class AddprojectComponent implements OnInit {
         this.projectForm.control.get('startDate').setValue(projectDto.startDate);
         this.projectForm.control.get('endDate').setValue(projectDto.endDate);
         this.projectForm.control.get('priority').setValue(projectDto.priority);
-        //this.projectForm.control.get('manager').setValue(projectDto.userDto.firstName);
         this.projectForm.control.get('projectId').setValue(projectDto.projectId);
       }
     )
@@ -97,6 +96,11 @@ export class AddprojectComponent implements OnInit {
       const endDate = this.datePipe.transform(date, 'yyyy-MM-dd');
       this.projectForm.control.get('startDate').setValue(startDate);
       this.projectForm.control.get('endDate').setValue(endDate);
+    }else{
+      this.dateFieldActive = true;
+      this.projectForm.control.get('startDate').setValue('');
+      this.projectForm.control.get('endDate').setValue('');
+
     }
   }
 

@@ -15,9 +15,6 @@ import java.util.stream.Collectors;
 public class ProjectConverter {
 
     @Resource
-    private UserConverter userConverter;
-
-    @Resource
     private TaskConverter taskConverter;
 
     public Project saveProject(ProjectDto projectDto) {
@@ -59,10 +56,6 @@ public class ProjectConverter {
             if (project.getProjectId() > 0) {
                 projectDto.setProjectId(project.getProjectId());
             }
-/*            if (project.getUser() != null) {
-                UserDto userDto = userConverter.convertUserToDto(project.getUser());
-                projectDto.setUserDto(userDto);
-            }*/
             if (project.getTasks() != null && project.getTasks().size() > 0) {
                 List<TaskDto> taskDtos = taskConverter.convertTaskListToDtoList(project.getTasks());
                 projectDto.setTaskDtos(taskDtos);
