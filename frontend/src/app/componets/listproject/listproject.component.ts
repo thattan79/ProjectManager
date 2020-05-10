@@ -2,6 +2,7 @@ import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
 import {ProjectDto} from "../../dto/project.dto";
 import {ProjectService} from "../../service/project.service";
 import {ProjectSortService} from "../../service/project-sort.service";
+import {TranslateService} from "@ngx-translate/core";
 
 @Component({
   selector: 'app-listproject',
@@ -36,9 +37,17 @@ export class ListprojectComponent implements OnChanges {
     this._searchVal = input;
   }
 
+  placeholder:string;
   constructor(private projectService: ProjectService,
-              private projectSortService: ProjectSortService) {
+              private projectSortService: ProjectSortService,
+              private translate: TranslateService
+              ) {
+    translate.get('placeholder.search').subscribe(
+      (placeholder: string) => this.placeholder = placeholder,
+    );
+    console.log(this.placeholder)
   }
+
 
 
   ngOnChanges(changes: SimpleChanges): void {

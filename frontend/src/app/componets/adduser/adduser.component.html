@@ -3,7 +3,7 @@
     <form #userForm="ngForm" (ngSubmit)="onSubmit()">
       <table class="table-responsive">
         <tr>
-          <td>First Name:</td>
+          <td>{{'user.firstName' | translate}}</td>
           <td><input type="text" class="form-control" style="margin-left:10%;width: 220%;" name="firstName"
                      [(ngModel)]="userDto.firstName" required #firstName="ngModel">
             <input type="hidden" [(ngModel)]="userDto.userId" name="userId">
@@ -11,13 +11,13 @@
         </tr>
         <tr *ngIf="firstName.touched && firstName.invalid">
           <td></td>
-          <td class="error">First name is mandatory</td>
+          <td class="error">{{'error.firstName' | translate}}</td>
         </tr>
         <tr>
           <td style="padding-top: 5%"></td>
         </tr>
         <tr>
-          <td>Last Name:</td>
+          <td>{{'user.lastName' | translate}}</td>
           <td>
             <input type="text" name="lastName" class="form-control" [(ngModel)]="userDto.lastName"
                    required #lastName="ngModel" style="margin-left:10%;width: 220%;">
@@ -25,13 +25,13 @@
         </tr>
         <tr *ngIf="lastName.touched && lastName.invalid">
           <td></td>
-          <td class="error">Please enter last name</td>
+          <td class="error">{{'error.lastName' | translate}}</td>
         </tr>
         <tr>
           <td style="padding-top: 5%"></td>
         </tr>
         <tr>
-          <td>Employee Id:</td>
+          <td>{{'user.employeeId' | translate}}</td>
           <td>
             <input type="number" name="employeeId" class="form-control" required #employeeId="ngModel"
                    [(ngModel)]="userDto.employeeId" style="margin-left:10%;width: 100%;">
@@ -39,16 +39,18 @@
         </tr>
         <tr *ngIf="employeeId.touched && employeeId.invalid">
           <td></td>
-          <td class="error">Please enter employee id</td>
+          <td class="error">{{'error.employeeId' | translate}}</td>
         </tr>
       </table>
       <div style="margin-left: 40%;margin-top: 3%">
         <button type="submit" class="btn btn-primary" [disabled]="!userForm.valid"
-                style="margin-right: 2%;padding-left: 3%;padding-right: 3%;">
-          {{userDto.edit ? 'Update' : '&nbsp;Add&nbsp;'}}
-        </button>
+                style="margin-right: 2%;padding-left: 3%;padding-right: 3%;"
+                *ngIf="!userDto.edit">{{'button.add' | translate}}</button>
+        <button type="submit" class="btn btn-primary" [disabled]="!userForm.valid"
+                style="margin-right: 2%;padding-left: 3%;padding-right: 3%;"
+                *ngIf="userDto.edit">{{'button.update' | translate}}</button>
         <button type="button" class="btn btn-primary" style="padding-left: 3%;padding-right: 3%;" (click)="onReset();">
-          Reset
+          {{'button.reset' | translate}}
         </button>
       </div>
     </form>

@@ -5,7 +5,7 @@
       <table class="table-responsive">
         <tr>
           <td>
-            <div style="height: 40px;">Project:</div>
+            <div style="height: 40px;">{{'project.projectTitle' | translate}}:</div>
           </td>
           <td style="width: 7%;"></td>
           <td colspan="3">
@@ -18,7 +18,7 @@
         <tr *ngIf="projectTitle.touched && projectTitle.errors?.required">
           <td></td>
           <td style="width: 7%;"></td>
-          <td colspan="3" class="error">Project title is mandatory</td>
+          <td colspan="3" class="error">{{'error.projectTitle' | translate}}</td>
           <td></td>
         </tr>
         <tr>
@@ -54,7 +54,7 @@
           <td colspan="3" style="padding-bottom: 3%" class="error">Dates are mandatory</td>
         </tr>
         <tr>
-          <td>Priority:</td>
+          <td>{{'project.priority' | translate}}</td>
           <td style="width: 7%;"></td>
           <td colspan="3">
             <ng5-slider [options]="options" [ngModel]="projectDto?.priority" name="priority" [(value)]="value"
@@ -65,12 +65,12 @@
         <tr *ngIf="priority.errors?.invalidPriority">
           <td></td>
           <td style="width: 7%;"></td>
-          <td colspan="3" style="padding-bottom: 3%" class="error"> Please select priority</td>
+          <td colspan="3" style="padding-bottom: 3%" class="error">{{'error.priority' | translate}}</td>
           <td></td>
         </tr>
         <tr>
           <td>
-            <div style="height: 40px;padding-top: 15%;">Manager:</div>
+            <div style="height: 40px;padding-top: 15%;">{{'project.manager' | translate}}</div>
           </td>
           <td style="width: 7%;"></td>
           <td colspan="3"><input type="text" class="form-control" disabled name="manager" ngModel
@@ -85,7 +85,7 @@
         <tr *ngIf="manager.errors?.inValidManager">
           <td></td>
           <td style="width: 7%;"></td>
-          <td colspan="3" class="error">Please select Manager</td>
+          <td colspan="3" class="error">{{'error.manager' | translate}}</td>
           <td></td>
         </tr>
       </table>
