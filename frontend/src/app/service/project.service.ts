@@ -9,9 +9,6 @@ import {UserDto} from "../dto/user.dto";
 })
 export class ProjectService {
 
-  @Output()
-  public projectEmitter: EventEmitter<ProjectDto> = new EventEmitter<ProjectDto>()
-
   constructor(private http: HttpClient) {
   }
 
@@ -32,6 +29,6 @@ export class ProjectService {
   }
 
   deleteProject(id: number): Observable<ProjectDto> {
-    return this.http.post<ProjectDto>('http://localhost:8081/project/delete/', +id);
+    return this.http.post<ProjectDto>('http://localhost:8081/project/delete', id);
   }
 }

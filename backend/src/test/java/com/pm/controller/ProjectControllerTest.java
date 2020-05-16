@@ -105,9 +105,9 @@ public class ProjectControllerTest {
     public void deleteProject() throws Exception {
         ObjectMapper mapper = new ObjectMapper();
         when(projectServiceImpl.deleteProject(anyLong())).thenReturn(new ProjectDto());
-        String requestJson = mapper.writeValueAsString(new ProjectDto());
+        String requestJson = mapper.writeValueAsString(100);
         final MvcResult mvcResult = mockMvc.perform(
-                post("/project/delete/10")
+                post("/project/delete")
                         .content(requestJson)
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
                         .accept(MediaType.APPLICATION_JSON_VALUE))

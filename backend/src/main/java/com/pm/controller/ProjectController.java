@@ -35,8 +35,8 @@ public class ProjectController {
         return projectServiceImpl.findProjectById(id);
     }
 
-    @PostMapping("/delete/{id}")
-    public ProjectDto deleteProject(@PathVariable("id") Long id) {
+    @PostMapping("/delete")
+    public ProjectDto deleteProject(@RequestBody Long id) {
         return projectServiceImpl.deleteProject(id);
     }
 }

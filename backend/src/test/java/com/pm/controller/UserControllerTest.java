@@ -113,9 +113,9 @@ public class UserControllerTest {
         final UserDto userDto = mockUserDto();
         ObjectMapper mapper = new ObjectMapper();
         when(userServiceImpl.deleteUser(anyLong())).thenReturn(userDto);
-        String requestJson = mapper.writeValueAsString(userDto);
+        String requestJson = mapper.writeValueAsString(100);
         final MvcResult mvcResult = mockMvc.perform(
-                post("/user/delete/10")
+                post("/user/delete")
                         .content(requestJson)
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
                         .accept(MediaType.APPLICATION_JSON_VALUE))
