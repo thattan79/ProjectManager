@@ -67,27 +67,11 @@ export class AddprojectComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log(this.startEndDateCheckBox)
     this.userService.findAllUser().subscribe(
       (userDtos: UserDto[]) => {
         this.userDtos = userDtos;
       }
     );
-
-    this.projectService.projectEmitter.subscribe(
-      (projectDto: ProjectDto) => {
-        this.projectDto = projectDto;
-        this.edit = true;
-        this.dateFieldActive = false;
-        this.projectForm.control.get('projectTitle').setValue(projectDto.projectTitle);
-        this.projectForm.control.get('startDate').setValue(projectDto.startDate);
-        this.projectForm.control.get('endDate').setValue(projectDto.endDate);
-        this.projectForm.control.get('priority').setValue(projectDto.priority);
-        this.projectForm.control.get('projectId').setValue(projectDto.projectId);
-        this.projectForm.control.get('manager').setValue(projectDto.userDtos[0].firstName);
-        this.projectForm.control.get('startEndDateCheckBox').setValue(true);
-      }
-    )
   }
 
   setDateField() {
@@ -180,5 +164,22 @@ export class AddprojectComponent implements OnInit {
 
   onReset() {
     this.projectForm.reset();
+  }
+
+  displayProject(projectDto: ProjectDto) {
+    this.edit = true;
+    this.dateFieldActive = false;
+    this.projectForm.control.get('projectTitle').setValue(projectDto.projectTitle);
+    this.projectForm.control.get('startDate').setValue(projectDto.startDate);
+    this.projectForm.control.get('endDate').setValue(projectDto.endDate);
+    this.projectForm.control.get('priority').setValue(projectDto.priority);
+    this.projectForm.control.get('projectId').setValue(projectDto.projectId);
+    if (projectDto.userDtos.length > 0) {
+      this.projectForm.control.get('manager').setValue(projectDto.userDtos[0].firstName);
+    }
+    if (projectDto.userDtos.length === 0) {
+      this.projectForm.control.get('manager').setValue('');
+    }
+    this.projectForm.control.get('startEndDateCheckBox').setValue(true);
   }
 }

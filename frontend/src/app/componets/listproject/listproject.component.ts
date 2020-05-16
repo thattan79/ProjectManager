@@ -1,4 +1,4 @@
-import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
+import {Component, EventEmitter, Input, Output, OnChanges, SimpleChanges} from '@angular/core';
 import {ProjectDto} from "../../dto/project.dto";
 import {ProjectService} from "../../service/project.service";
 import {ProjectSortService} from "../../service/project-sort.service";
@@ -14,6 +14,8 @@ export class ListprojectComponent implements OnChanges {
   @Input('projectDto') projectDto: ProjectDto
   projectDtos: ProjectDto[] = [];
   search: boolean = false;
+  @Output()
+  public projectEmitter: EventEmitter<ProjectDto> = new EventEmitter<ProjectDto>()
 
   _searchVal: string;
   get searchVal(): string {
@@ -37,17 +39,15 @@ export class ListprojectComponent implements OnChanges {
     this._searchVal = input;
   }
 
-  placeholder:string;
+  placeholder: string;
+
   constructor(private projectService: ProjectService,
               private projectSortService: ProjectSortService,
-              private translate: TranslateService
-              ) {
+              private translate: TranslateService) {
     translate.get('placeholder.search').subscribe(
       (placeholder: string) => this.placeholder = placeholder,
     );
-    console.log(this.placeholder)
   }
-
 
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -66,7 +66,7 @@ export class ListprojectComponent implements OnChanges {
   onUpdate(projectId: number) {
     this.projectService.findProjectById(projectId).subscribe(
       (projectDto: ProjectDto) => {
-        this.projectService.projectEmitter.emit(projectDto);
+        this.projectEmitter.emit(projectDto);
       }
     );
   }

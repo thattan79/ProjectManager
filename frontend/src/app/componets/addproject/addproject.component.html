@@ -138,4 +138,4 @@
     </div>
   </ng-template>
 </div>
-<app-listproject [projectDto]="projectDto"></app-listproject>
+<app-listproject [projectDto]="projectDto" (projectEmitter)="displayProject($event);"></app-listproject>
