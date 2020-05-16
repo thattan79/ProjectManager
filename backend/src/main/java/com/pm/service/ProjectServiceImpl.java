@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@Transactional
 public class ProjectServiceImpl implements IProjectService {
 
     @Resource
@@ -25,9 +26,8 @@ public class ProjectServiceImpl implements IProjectService {
     @Resource
     private UserRepository userRepository;
 
-    @Transactional
     public ProjectDto createProject(ProjectDto projectDto) {
-        final Project project = projectConverter.saveProject(projectDto);
+        final Project project = projectConverter.createProjectFromDto(projectDto);
         Optional<User> userOpt = userRepository.findById(projectDto.getUserId());
         User user = null;
         if (userOpt.isPresent()) {
@@ -63,6 +63,13 @@ public class ProjectServiceImpl implements IProjectService {
         return new ProjectDto();
     }
 
+    @Transactional
+    public ProjectDto deleteProject(Long id) {
+        final Optional<Project> optProject = projectRepository.findById(id);
+        optProject.ifPresent(project -> projectRepository.delete(optProject.get()));
+        return new ProjectDto();
+    }
+
     private void setCountOfTask(List<ProjectDto> projectDtos) {
         for (ProjectDto projectDto : projectDtos) {
             List<TaskDto> taskDtos = projectDto.getTaskDtos();
@@ -77,11 +84,5 @@ public class ProjectServiceImpl implements IProjectService {
                 }
             }
         }
-    }
-
-    public ProjectDto deleteProject(Long id) {
-        final Optional<Project> optProject = projectRepository.findById(id);
-        optProject.ifPresent(project -> projectRepository.delete(optProject.get()));
-        return new ProjectDto();
     }
 }

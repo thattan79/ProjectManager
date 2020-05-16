@@ -1,0 +1,67 @@
+{
+  "header": {
+    "title": "Project Manager[F]"
+  },
+  "navigation": {
+    "project": "Add Project[F]",
+    "addtask": "Add Task[F]",
+    "user": "Add User[F]",
+    "viewtask": "View Task[F]"
+  },
+  "user": {
+    "firstName": "First Name[F]:",
+    "lastName": "Last Name[F]:",
+    "employeeId": "Employee Id[F]:"
+  },
+  "project": {
+    "projectTitle": "Project[F]",
+    "priority": "Priority[F]:",
+    "manager": "Manager[F]:",
+    "noOfTasks": "No of Tasks[F]:",
+    "startDate": "Start Date[F]:",
+    "endDate": "End Date[F]:"
+  },
+  "task": {
+    "name": "Task[F]:",
+    "parentName": "Parent Task[F]",
+    "user": "User[F]:"
+  },
+  "error": {
+    "firstName": "First name is mandatory[F]",
+    "lastName": "Last name is mandatory[F]",
+    "employeeId": "Employee id is mandatory[F]",
+    "projectTitle": "Project is mandatory[F]",
+    "priority": "Priority is mandatory[F]",
+    "manager": "Manager is mandatory[F]",
+    "task": "Task is mandatory[F]",
+    "startDate": "Start Date is mandatory[F]",
+    "endDate": "End Date is mandatory[F]",
+    "invalidDate": "End date is not before start date[F]",
+    "user": "User is mandatory[F]",
+    "noUser": "No User Found[F]"
+  },
+  "button": {
+    "add": "Add[F]",
+    "update": "Update[F]",
+    "reset": "Reset[F]",
+    "delete": "Delete[F]",
+    "edit": "Edit[F]",
+    "suspend": "Suspend[F]",
+    "search": "Search[F]",
+    "submit": "Submit[F]",
+    "close": "Close[F]"
+  },
+  "sort": {
+    "labelBy": "Sort By[F]:",
+    "label": "Sort[F]:",
+    "firstName": "First Name[F]",
+    "lastName": "Last Name[F]",
+    "employeeId": "Id[F]",
+    "startDate": "Start Date[F]",
+    "endDate": "End Date[F]",
+    "completed": "Completed[F]"
+  },
+  "placeholder": {
+    "serach": "Search[F].."
+  }
+}

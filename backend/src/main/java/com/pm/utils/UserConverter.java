@@ -35,7 +35,7 @@ public class UserConverter {
         return userDto;
     }
 
-    public User createUser(UserDto userDto) {
+    public User convertUserDtoToUser(final UserDto userDto) {
         final User user = new User();
         if (userDto.getUserId() > 0) {
             user.setUserId(userDto.getUserId());

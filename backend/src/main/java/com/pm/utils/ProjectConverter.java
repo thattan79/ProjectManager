@@ -22,11 +22,7 @@ public class ProjectConverter {
     @Resource
     private UserConverter userConverter;
 
-    public Project saveProject(ProjectDto projectDto) {
-        return createProjectFromDto(projectDto);
-    }
-
-    private Project createProjectFromDto(ProjectDto projectDto) {
+    public Project createProjectFromDto(ProjectDto projectDto) {
         final Project project = new Project();
         project.setProjectTitle(projectDto.getProjectTitle());
         project.setStartDate(projectDto.getStartDate());

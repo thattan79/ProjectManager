@@ -24,7 +24,7 @@ public class UserServiceImpl implements IUserService {
 
     public UserDto createUser(UserDto userDto) {
         log.info("-createUser-");
-        final User user = userConverter.createUser(userDto);
+        final User user = userConverter.convertUserDtoToUser(userDto);//createUser(userDto);
         userRepository.save(user);
         return userDto;
     }

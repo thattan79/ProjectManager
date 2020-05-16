@@ -33,11 +33,12 @@ public class UserController {
 
     @GetMapping("/findUserById/{id}")
     public UserDto findUser(@PathVariable("id") Long id) {
+
         return userServiceImpl.findById(id);
     }
 
-    @PostMapping("/delete")
-    public UserDto deleteUser(@RequestBody Long id) {
+    @PostMapping("/delete/{id}")
+    public UserDto deleteUser(@PathVariable("id") Long id) {
         return userServiceImpl.deleteUser(id);
     }
 

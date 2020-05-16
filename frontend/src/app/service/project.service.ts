@@ -32,6 +32,6 @@ export class ProjectService {
   }
 
   deleteProject(id: number): Observable<ProjectDto> {
-    return this.http.post<ProjectDto>('http://localhost:8081/project/delete', id);
+    return this.http.post<ProjectDto>('http://localhost:8081/project/delete/', +id);
   }
 }

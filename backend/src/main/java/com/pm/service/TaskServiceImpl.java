@@ -29,7 +29,6 @@ public class TaskServiceImpl implements ITaskService {
     @Resource
     private TaskConverter taskConverter;
 
-    @Transactional
     public ParentTask createParentTask(ParentTaskDto parentTaskDto) {
         final ParentTask parentTask = new ParentTask();
         parentTask.setParentTaskName(parentTaskDto.getParentTaskName());

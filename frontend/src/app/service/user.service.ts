@@ -18,7 +18,7 @@ export class UserService {
   }
 
   deleteUser(id: number): Observable<UserDto> {
-    return this.http.post<UserDto>('http://localhost:8081/user/delete', id);
+    return this.http.post<UserDto>('http://localhost:8081/user/delete/', +id);
   }
 
   findAllUser(): Observable<UserDto[]> {
