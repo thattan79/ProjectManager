@@ -16,6 +16,8 @@ export class ListprojectComponent implements OnChanges {
   search: boolean = false;
   @Output()
   public projectEmitter: EventEmitter<ProjectDto> = new EventEmitter<ProjectDto>()
+  @Output()
+  public projectActionEmitter: EventEmitter<string> = new EventEmitter<string>()
 
   _searchVal: string;
   get searchVal(): string {
@@ -66,12 +68,22 @@ export class ListprojectComponent implements OnChanges {
   onUpdate(projectId: number) {
     this.projectService.findProjectById(projectId).subscribe(
       (projectDto: ProjectDto) => {
+        this.projectActionEmitter.emit('update');
         this.projectEmitter.emit(projectDto);
       }
     );
   }
 
   onDelete(id: number) {
-    this.projectService.deleteProject(id).subscribe();
+    this.projectService.deleteProject(id).subscribe(
+      (projectDto: ProjectDto) => {
+        this.projectActionEmitter.emit('delete');
+        this.projectService.findAllProjects().subscribe(
+          (projectDtos: ProjectDto[]) => {
+            this.projectDtos = projectDtos;
+          }
+        )
+      }
+    );
   }
 }

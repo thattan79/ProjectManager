@@ -74,6 +74,7 @@
           </td>
           <td style="width: 7%;"></td>
           <td colspan="3"><input type="text" class="form-control" disabled name="manager" ngModel
+                                 [ngStyle]="{'border': inValidManager ? '1px solid red':''}"
                                  #manager="ngModel" style="width: 170%">
           </td>
           <td>
@@ -91,7 +92,7 @@
       </table>
       <div style="margin-left: 40%;margin-top: 3%">
         <button type="submit" class="btn btn-primary" style="margin-right: 2%;padding-left: 3%;padding-right: 3%;"
-                [disabled]="!projectForm.valid && !edit ">
+                [disabled]="!projectForm.valid">
           {{edit ? 'Update' : '&nbsp;Add&nbsp;'}}
         </button>
         <button type="button" class="btn btn-primary" style="padding-left: 3%;padding-right: 3%;" (click)="onReset();">
@@ -138,4 +139,7 @@
     </div>
   </ng-template>
 </div>
-<app-listproject [projectDto]="projectDto" (projectEmitter)="displayProject($event);"></app-listproject>
+<app-listproject [projectDto]="projectDto"
+                 (projectEmitter)="displayProject($event);"
+                 (projectActionEmitter)="buttonAction($event)"
+></app-listproject>

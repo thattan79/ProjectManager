@@ -26,6 +26,7 @@ export class AddprojectComponent implements OnInit {
   search: boolean = false;
   edit: boolean = false;
   startEndDateCheckBox: boolean = false;
+  inValidManager: boolean = false;
 
   value: number = 100;
   options: Options = {
@@ -117,8 +118,9 @@ export class AddprojectComponent implements OnInit {
     }
     if (managerRef.value === '') {
       managerRef.setErrors({
-        'inValidManager': true
+        'inValidManager': true,
       });
+      this.inValidManager = true;
     }
     if (!startEndDateCheckBoxRef.value) {
       this.projectForm.control.get('startEndDateCheckBox').setErrors(
@@ -160,6 +162,7 @@ export class AddprojectComponent implements OnInit {
     this.userDto = userDto;
     this.projectForm.control.get('manager').setValue(userDto.firstName);
     this.projectForm.control.get('manager').setErrors(null);
+    this.inValidManager = false;
   }
 
   onReset() {
@@ -167,7 +170,6 @@ export class AddprojectComponent implements OnInit {
   }
 
   displayProject(projectDto: ProjectDto) {
-    this.edit = true;
     this.dateFieldActive = false;
     this.projectForm.control.get('projectTitle').setValue(projectDto.projectTitle);
     this.projectForm.control.get('startDate').setValue(projectDto.startDate);
@@ -181,5 +183,19 @@ export class AddprojectComponent implements OnInit {
       this.projectForm.control.get('manager').setValue('');
     }
     this.projectForm.control.get('startEndDateCheckBox').setValue(true);
+  }
+
+  buttonAction(btnAction: string) {
+    if (btnAction === 'update') {
+      this.edit = true;
+    } else if (btnAction === 'delete') {
+      this.edit = false;
+      this.projectForm.control.get('projectTitle').setValue('');
+      this.projectForm.control.get('startDate').setValue('');
+      this.projectForm.control.get('endDate').setValue('');
+      this.projectForm.control.get('priority').setValue('');
+      this.projectForm.control.get('manager').setValue('');
+      this.projectForm.control.get('startEndDateCheckBox').setValue(false);
+    }
   }
 }
