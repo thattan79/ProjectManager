@@ -4,9 +4,11 @@ import {ProjectDto} from "../../dto/project.dto";
 import {TaskDto} from "../../dto/task.dto";
 import {TaskService} from "../../service/task.service";
 import {NgForm} from '@angular/forms';
-import {Router, ActivatedRoute, Params} from "@angular/router";
+import {Router, ActivatedRoute} from "@angular/router";
 import {BsModalRef, BsModalService} from 'ngx-bootstrap';
-import {UserDto} from "../../dto/user.dto";
+import {Location} from "@angular/common";
+import {ProjectSortService} from "../../service/project-sort.service";
+import {TaskSortService} from "../../service/task-sort.service";
 
 @Component({
   selector: 'app-viewtask',
@@ -21,12 +23,15 @@ export class ViewtaskComponent implements OnInit {
   projectDto: ProjectDto;
   projectName: string;
   display: boolean = false;
+
   @ViewChild('viewTaskForm') viewTaskForm: NgForm;
 
   constructor(private projectService: ProjectService,
               private router: Router,
               private activatedRoute: ActivatedRoute,
               private taskService: TaskService,
+              private location: Location,
+              private taskSortService: TaskSortService,
               private bsModalService: BsModalService) {
     this.projectDto = new ProjectDto();
   }
@@ -62,7 +67,15 @@ export class ViewtaskComponent implements OnInit {
   }
 
   updateTaskStatus(taskDto: TaskDto) {
-    this.taskService.updateTaskStatus(taskDto).subscribe();
+    this.taskService.updateTaskStatus(taskDto).subscribe(
+      () => {
+        this.router.navigateByUrl('/refresh', {skipLocationChange: true}).then(() => {
+          this.router.navigate([decodeURI(this.location.path())], {queryParams: {projectName: this.projectName}});
+        });
+      }
+    )
+    ;
+    taskDto = new TaskDto();
   }
 
   displayTasks() {
@@ -114,4 +127,10 @@ export class ViewtaskComponent implements OnInit {
       }
     );
   }
+
+  onSort(field) {
+    this.taskSortService.setTaskDtos(this.taskDtos);
+    this.taskSortService.sortByTaskField(field);
+  }
+
 }

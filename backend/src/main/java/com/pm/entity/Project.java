@@ -1,8 +1,6 @@
 package com.pm.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -34,17 +32,12 @@ public class Project {
     @JsonBackReference
     private List<Task> tasks = new ArrayList<>();
 
-    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "project")
     @JsonBackReference
     private List<User> users = new ArrayList<>();
 
     public void addUser(User user) {
         users.add(user);
         user.setProject(this);
-    }
-
-    public void removeUser(User user) {
-        users.remove(user);
-        user.setProject(null);
     }
 }

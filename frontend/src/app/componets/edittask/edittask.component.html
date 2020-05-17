@@ -108,11 +108,13 @@
         </tr>
       </table>
       <div style="margin-left: 40%;margin-top: 3%">
-        <button type="submit" [disabled]="!taskForm.valid"
+        <button type="submit" [disabled]="!taskForm.valid || taskDto.status==='COMPLETE'"
                 class="btn btn-primary" style="margin-right: 2%;padding-left: 3%;padding-right: 3%;">
           &nbsp;&nbsp;Update&nbsp;&nbsp;
         </button>
-        <button type="button" class="btn btn-primary" style="padding-left: 3%;padding-right: 3%;">Reset</button>
+        <button type="button" class="btn btn-primary" style="padding-left: 3%;padding-right: 3%;"
+                [disabled]=" taskDto.status==='COMPLETE'">Reset
+        </button>
       </div>
     </form>
   </div>

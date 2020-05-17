@@ -3,6 +3,7 @@ package com.pm.service;
 import com.pm.dto.ProjectDto;
 import com.pm.dto.TaskDto;
 import com.pm.entity.Project;
+import com.pm.entity.Task;
 import com.pm.entity.User;
 import com.pm.repository.ProjectRepository;
 import com.pm.repository.UserRepository;
@@ -66,14 +67,25 @@ public class ProjectServiceImpl implements IProjectService {
     @Transactional
     public ProjectDto deleteProject(Long id) {
         final Optional<Project> optProject = projectRepository.findById(id);
-        optProject.ifPresent(project -> projectRepository.delete(optProject.get()));
+        optProject.ifPresent(project -> {
+            for (User user : project.getUsers()) {
+                user.setProject(null);
+                user.setTask(null);
+            }
+            for (Task task : project.getTasks()) {
+                task.setProject(null);
+            }
+            project.setUsers(null);
+            project.setTasks(null);
+            projectRepository.delete(project);
+        });
         return new ProjectDto();
     }
 
     private void setCountOfTask(List<ProjectDto> projectDtos) {
         for (ProjectDto projectDto : projectDtos) {
             List<TaskDto> taskDtos = projectDto.getTaskDtos();
-            if (taskDtos != null && taskDtos.size() > 0) {
+            if (taskDtos != null && !taskDtos.isEmpty()) {
                 projectDto.setTotalNoOfTasks(taskDtos.size());
                 int noOfCompletedTasks = 0;
                 for (TaskDto taskDto : taskDtos) {

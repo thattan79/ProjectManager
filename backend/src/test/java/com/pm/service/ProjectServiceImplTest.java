@@ -46,7 +46,7 @@ public class ProjectServiceImplTest {
 
     @Test
     public void findAllProjects() {
-        when(projectConverter.convertProjectListToDtoList(anyList())).thenReturn(Arrays.asList(mockProjectDto()));
+        when(projectConverter.convertProjectListToDtoList(anyList())).thenReturn(Arrays.asList(mockProjectDtoWithoutTask()));
         assertNotNull(projectServiceImpl.findAllProjects());
     }
 
@@ -107,6 +107,16 @@ public class ProjectServiceImplTest {
         userDto.setLastName("Test");
         userDto.setEmployeeId("123");
         return userDto;
+    }
+
+    private ProjectDto mockProjectDtoWithoutTask() {
+        final ProjectDto projectDto = new ProjectDto();
+        projectDto.setProjectTitle("Test");
+        projectDto.setStartDate(LocalDate.now());
+        projectDto.setEndDate(LocalDate.now());
+        projectDto.setPriority(1);
+        projectDto.setUserId(1);
+        return projectDto;
     }
 
     private ProjectDto mockProjectDto() {

@@ -44,7 +44,7 @@ public class ProjectConverter {
             projectDto.setProjectId(project.getProjectId());
         }
         List<User> users = project.getUsers();
-        if (users != null && users.size() > 0) {
+        if (users != null && !users.isEmpty()) {
             List<UserDto> userDtos = userConverter.convertUserListToDtoList(users);
             projectDto.setUserDtos(userDtos);
         }
@@ -62,7 +62,7 @@ public class ProjectConverter {
             if (project.getProjectId() > 0) {
                 projectDto.setProjectId(project.getProjectId());
             }
-            if (project.getTasks() != null && project.getTasks().size() > 0) {
+            if (project.getTasks() != null && !project.getTasks().isEmpty()) {
                 List<TaskDto> taskDtos = taskConverter.convertTaskListToDtoList(project.getTasks());
                 projectDto.setTaskDtos(taskDtos);
             }

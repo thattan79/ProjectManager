@@ -14,28 +14,24 @@
           </td>
           <td style="padding-left: 3%; width: 14%;">Sort Task By:</td>
           <td>
-            <button type="button" style=" font-size: 12px; margin-right: 3%; padding-left: 16%; padding-right: 16%;"
-                    class="btn btn-primary">Start Date
+            <button type="button" style=" font-size: 12px; margin-right: 3%; padding-left: 16%; padding-right: 16%;" (click)="onSort('startDate');"  class="btn btn-primary">Start Date
             </button>
           </td>
           <td style="padding-right: 20px;">&nbsp;</td>
           <td>
-            <button type="button" class="btn btn-primary"
-                    style=" font-size: 12px; margin-right: 3%; padding-left: 16%; padding-right: 16%;">
+            <button type="button" class="btn btn-primary"  style=" font-size: 12px; margin-right: 3%; padding-left: 16%; padding-right: 16%;" (click)="onSort('endDate');">
               End Date
             </button>
           </td>
           <td style="padding-right: 20px;">&nbsp;</td>
           <td>
-            <button type="button" class="btn btn-primary"
-                    style=" font-size: 12px; margin-right: 3%; padding-left: 16%; padding-right: 16%;">
+            <button type="button" class="btn btn-primary"  style=" font-size: 12px; margin-right: 3%; padding-left: 16%; padding-right: 16%;" (click)="onSort('priority');">
               Priority
             </button>
           </td>
           <td style="padding-right: 20px;">&nbsp;</td>
           <td>
-            <button type="button" class="btn btn-primary"
-                    style=" font-size: 12px; margin-right: 3%; padding-left: 16%; padding-right: 16%;">
+            <button type="button" class="btn btn-primary" style=" font-size: 12px; margin-right: 3%; padding-left: 16%; padding-right: 16%;" (click)="onSort('completed');">
               Completed
             </button>
           </td>
@@ -74,7 +70,8 @@
             </button>
           </td>
           <td>
-            <button type="button" class="btn btn-primary" style=" font-size: 12px; margin-right: 3%;
+            <button type="button" class="btn btn-primary" [disabled]="task.status==='COMPLETE'"
+                    style=" font-size: 12px; margin-right: 3%;
            padding-left: 10%; padding-right: 10%; " (click)="updateTaskStatus(task);">End Task
             </button>
           </td>

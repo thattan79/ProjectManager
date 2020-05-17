@@ -24,7 +24,7 @@ public class UserServiceImpl implements IUserService {
 
     public UserDto createUser(UserDto userDto) {
         log.info("-createUser-");
-        final User user = userConverter.convertUserDtoToUser(userDto);//createUser(userDto);
+        final User user = userConverter.convertUserDtoToUser(userDto);
         userRepository.save(user);
         return userDto;
     }
@@ -40,10 +40,10 @@ public class UserServiceImpl implements IUserService {
             return findAllUser();
         }
         users = userRepository.findByFirstNameContaining(input);
-        if (users != null && users.size() == 0) {
+        if (users != null && users.isEmpty()) {
             users = userRepository.findByLastNameContaining(input);
         }
-        if (users != null && users.size() == 0) {
+        if (users != null && users.isEmpty()) {
             users = userRepository.findByEmployeeIdContaining(input);
         }
         return userConverter.convertUserListToDtoList(users);
@@ -58,12 +58,14 @@ public class UserServiceImpl implements IUserService {
         return new UserDto();
     }
 
-    @Transactional
     public UserDto deleteUser(Long id) {
         log.info("-deleteUser-");
         final Optional<User> optUser = userRepository.findById(id);
         if (optUser.isPresent()) {
-            userRepository.delete(optUser.get());
+            final User user = optUser.get();
+            user.setProject(null);
+            user.setTask(null);
+            userRepository.delete(user);
         }
         return new UserDto();
     }

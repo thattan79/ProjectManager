@@ -15,13 +15,13 @@ import java.util.List;
 @NoArgsConstructor
 public class ProjectDto {
     private long projectId;
-    public String projectTitle;
-    public LocalDate startDate;
-    public LocalDate endDate;
-    public int priority;
-    public long userId;
-    public List<UserDto> userDtos = new ArrayList<>();
-    public List<TaskDto> taskDtos = new ArrayList<>();
-    public int totalNoOfTasks;
-    public int totalNoOfCompletedTasks;
+    private String projectTitle;
+    private LocalDate startDate;
+    private LocalDate endDate;
+    private int priority;
+    private long userId;
+    private List<UserDto> userDtos = new ArrayList<>();
+    private List<TaskDto> taskDtos = new ArrayList<>();
+    private int totalNoOfTasks;
+    private int totalNoOfCompletedTasks;
 }
