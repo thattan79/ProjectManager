@@ -265,4 +265,8 @@ export class AddtaskComponent implements OnInit {
   parentTaskConfirm() {
     this.parentTaskRef = this.taskForm.control.get('parentTask').value;
   }
+
+  onReset() {
+    this.taskForm.reset();
+  }
 }

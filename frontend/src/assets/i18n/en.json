@@ -60,8 +60,5 @@
     "startDate": "Start Date",
     "endDate": "End Date",
     "completed": "Completed"
-  },
-  "placeholder": {
-    "serach": "Search.."
   }
 }

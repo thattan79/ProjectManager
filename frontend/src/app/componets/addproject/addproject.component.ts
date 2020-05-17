@@ -92,6 +92,7 @@ export class AddprojectComponent implements OnInit {
   }
 
   onSubmit() {
+    this.edit = false;
     const startDateRef = this.projectForm.control.get('startDate');
     const endDateRef = this.projectForm.control.get('endDate');
     const priorityRef = this.projectForm.control.get('priority');

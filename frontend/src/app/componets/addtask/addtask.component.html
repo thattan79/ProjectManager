@@ -14,7 +14,8 @@
           </td>
           <td>
             <div style="margin-left: 70%;height: 40px;">
-              <button type="button" class="btn btn-link" (click)="openModal(projectTemplate)">{{'button.search' | translate}}</button>
+              <button type="button" class="btn btn-link" (click)="openModal(projectTemplate)"
+                      [disabled]="parentTaskRef">{{'button.search' | translate}}</button>
             </div>
           </td>
         </tr>
@@ -27,7 +28,8 @@
           <td colspan="3">
             <input type="text" [ngModel]="taskDto?.taskName" name="taskName" #taskName="ngModel"
                    class="form-control" style="width: 167%" required>
-            <span *ngIf="taskName.touched && taskName.errors?.required" class="error">{{'error.task' | translate}}</span>
+            <span *ngIf="taskName.touched && taskName.errors?.required"
+                  class="error">{{'error.task' | translate}}</span>
           </td>
           <td></td>
         </tr>
@@ -47,10 +49,12 @@
           <td>{{'project.priority' | translate}}</td>
           <td style="width: 7%;"></td>
           <td colspan="3">
-            <ng5-slider [options]="options" [ngModel]="taskDto?.priority" name="priority" #priority="ngModel" [(value)]="value"
+            <ng5-slider [options]="options" [ngModel]="taskDto?.priority" name="priority" #priority="ngModel"
+                        [(value)]="value"
                         [disabled]="parentTaskRef" style="margin-bottom:10%;width: 167%">
             </ng5-slider>
-            <div *ngIf="priority.errors?.invalidPriority" class="error" style="margin-bottom: 4%">{{'error.priority' | translate}}
+            <div *ngIf="priority.errors?.invalidPriority" class="error"
+                 style="margin-bottom: 4%">{{'error.priority' | translate}}
             </div>
           </td>
           <td></td>
@@ -67,7 +71,8 @@
           </td>
           <td>
             <div style="margin-left: 70%;height: 40px;">
-              <button type="button" class="btn btn-link" (click)="loadParentTask();openModal(parentTaskTemplate)">
+              <button type="button" class="btn btn-link" (click)="loadParentTask();openModal(parentTaskTemplate)"
+                      [disabled]="parentTaskRef">
                 {{'button.search' | translate}}
               </button>
             </div>
@@ -81,7 +86,8 @@
             <input type="text" id="sDate" (change)="removeBorderColor();" required class="form-control"
                    [ngModel]="taskDto?.startDate" name="startDate" #startDate="ngModel" [readOnly]="parentTaskRef"
                    onfocus="(this.type='date')" onblur="(this.type='text')">
-            <span *ngIf="startDate.touched && startDate.errors?.required" class="error">{{'error.startDate' | translate}}</span>
+            <span *ngIf="startDate.touched && startDate.errors?.required"
+                  class="error">{{'error.startDate' | translate}}</span>
           </td>
           <td style="width:5%;">&nbsp;</td>
           <td style="padding-top: 3%;">End Date:</td>
@@ -89,7 +95,8 @@
             <input type="text" id="eDate" (change)="removeBorderColor();" required class="form-control"
                    [ngModel]="taskDto?.endDate" name="endDate" #endDate="ngModel" [readOnly]="parentTaskRef"
                    onfocus="(this.type='date')" onblur="(this.type='text')">
-            <span *ngIf="endDate.touched && endDate.errors?.required" class="error">{{'error.endDate' | translate}}</span>
+            <span *ngIf="endDate.touched && endDate.errors?.required"
+                  class="error">{{'error.endDate' | translate}}</span>
           </td>
         </tr>
         <tr *ngIf="endDate.errors?.inValidDate">
@@ -110,17 +117,19 @@
           </td>
           <td>
             <div style="margin-left: 70%;height: 0px;">
-              <button type="button" class="btn btn-link" (click)="openModal(userTemplate)">{{'button.search' | translate}}</button>
+              <button type="button" class="btn btn-link" (click)="openModal(userTemplate)"
+                      [disabled]="parentTaskRef">{{'button.search' | translate}}</button>
             </div>
           </td>
         </tr>
       </table>
-      <div style="margin-left: 40%;margin-top: 3%">
+      <div style="margin-left:30%;margin-top: 3%">
         <button type="submit" [disabled]="!taskForm.valid"
                 class="btn btn-primary" style="margin-right: 2%;padding-left: 3%;padding-right: 3%;">
           &nbsp;&nbsp;Add&nbsp;&nbsp;
         </button>
-        <button type="button" class="btn btn-primary" style="padding-left: 3%;padding-right: 3%;">{{'button.reset' | translate}}</button>
+        <button type="button" class="btn btn-primary" style="padding-left: 3%;padding-right: 3%;" (click)="onReset();">
+          {{'button.reset' | translate}}</button>
       </div>
     </form>
   </div>
@@ -130,7 +139,7 @@
         <tr>
           <td></td>
           <td style="padding-top: 3%;">
-            <input type="text" class="form-control" [(ngModel)]="searchVal" placeholder="{{'placeholder.search' | translate}}"></td>
+            <input type="text" class="form-control" [(ngModel)]="searchVal" placeholder="Search..."></td>
           <td style="padding-top: 3%;"></td>
         </tr>
       </table>
@@ -168,7 +177,7 @@
         <tr>
           <td></td>
           <td style="padding-top: 3%;">
-            <input type="text" class="form-control" [(ngModel)]="projectSearchVal" placeholder="{{'placeholder.search' | translate}}"></td>
+            <input type="text" class="form-control" [(ngModel)]="projectSearchVal" placeholder="Search..."></td>
           <td style="padding-top: 3%;"></td>
         </tr>
       </table>
@@ -188,7 +197,7 @@
           <td>{{project.startDate}}</td>
           <td>{{project.endDate}}</td>
           <td>{{project.priority}}</td>
-          <td style="padding-left: 4%"><input type="radio"  name="projectRadio" (click)="selectProject(project)"></td>
+          <td style="padding-left: 4%"><input type="radio" name="projectRadio" (click)="selectProject(project)"></td>
         </tr>
         </tbody>
       </table>
@@ -222,7 +231,8 @@
         <tbody>
         <tr *ngFor="let parent of parentTaskDtos">
           <td>{{parent.parentTaskName}}</td>
-          <td style="padding-left: 4%"><input type="radio" name="parentTaskRadio" (click)="selectParentTask(parent)"></td>
+          <td style="padding-left: 4%"><input type="radio" name="parentTaskRadio" (click)="selectParentTask(parent)">
+          </td>
         </tr>
         </tbody>
       </table>

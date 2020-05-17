@@ -30,6 +30,7 @@ public class TaskConverter {
         task.setEndDate(taskDto.getEndDate());
         task.setPriority(taskDto.getPriority());
         task.setStatus(taskDto.getStatus());
+        task.setStatus("START");
         if (taskDto.getTaskId() > 0) {
             task.setTaskId(taskDto.getTaskId());
         }

@@ -16,7 +16,6 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "PROJECT_TABLE")
 public class Project {
     @Id
     @SequenceGenerator(name = "projectSeqGen", sequenceName = "projectSeq", initialValue = 1, allocationSize = 100)

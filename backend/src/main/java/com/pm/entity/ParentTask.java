@@ -14,7 +14,6 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "PARENT_TASK_TABLE")
 public class ParentTask {
     @Id
     @SequenceGenerator(name = "parentSeqGen", sequenceName = "parentSeq", initialValue = 1, allocationSize = 100)

@@ -15,7 +15,6 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "TASK_TABLE")
 public class Task {
     @Id
     @SequenceGenerator(name = "taskSeqGen", sequenceName = "taskSeq", initialValue = 1, allocationSize = 100)
