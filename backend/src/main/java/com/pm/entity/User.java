@@ -24,7 +24,7 @@ public class User {
     @JsonManagedReference
     private Project project;
 
-    @OneToOne
+    @OneToOne(orphanRemoval = true)
     @JoinColumn(name = "task_id")
     @JsonManagedReference
     private Task task;

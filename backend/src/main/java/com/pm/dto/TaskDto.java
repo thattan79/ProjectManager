@@ -13,13 +13,13 @@ import java.time.LocalDate;
 @NoArgsConstructor
 public class TaskDto {
     private long taskId;
-    public String taskName;
-    public LocalDate startDate;
-    public LocalDate endDate;
-    public int priority;
-    public String status;
-    public boolean isParentTask;
-    public long userId;
+    private String taskName;
+    private LocalDate startDate;
+    private LocalDate endDate;
+    private int priority;
+    private String status;
+    private boolean isParentTask;
+    private long userId;
     private long projectId;
     private long parentTaskId;
     private ParentTaskDto parentTaskDto = new ParentTaskDto();
