@@ -28,7 +28,7 @@
             <input id="checkId" type="checkbox" style="width: 25px; height: 25px;"
                    ngModel name="startEndDateCheckBox"
                    #startEndDateCheckBox="ngModel" (change)="setDateField()"/>
-            <label for="checkId" style="font-size: 87%;font-weight: normal;">Set Start and End Datee</label>
+            <label for="checkId" style="font-size: 87%;font-weight: normal;">{{'startAndEndDate' | translate}}</label>
           </td>
           <td>
             <input type="text" placeholder="Start Date" id="sDate" (change)="removeBorderColor();"
@@ -79,7 +79,8 @@
           </td>
           <td>
             <div style="margin-left: 130%;height: 34px;padding-top: 5%">
-              <button type="button" class="btn btn-link" (click)="openModal(template)">Search</button>
+              <button type="button" class="btn btn-link"
+                      (click)="openModal(template)">{{'button.search' | translate}}</button>
             </div>
           </td>
         </tr>
@@ -92,11 +93,13 @@
       </table>
       <div style="margin-left: 40%;margin-top: 3%">
         <button type="submit" class="btn btn-primary" style="margin-right: 2%;padding-left: 3%;padding-right: 3%;"
-                [disabled]="!projectForm.valid">
-          {{edit ? 'Update' : '&nbsp;Add&nbsp;'}}
+                [disabled]="!projectForm.valid" *ngIf="edit">{{'button.update' | translate}}
+        </button>
+        <button type="submit" class="btn btn-primary" style="margin-right: 2%;padding-left: 3%;padding-right: 3%;"
+                [disabled]="!projectForm.valid" *ngIf="!edit">&nbsp;{{'button.add' | translate}}&nbsp;
         </button>
         <button type="button" class="btn btn-primary" style="padding-left: 3%;padding-right: 3%;" (click)="onReset();">
-          Reset
+          {{'button.reset' | translate}}
         </button>
       </div>
     </form>
@@ -114,10 +117,10 @@
       <table class="table">
         <thead>
         <tr>
-          <th>First Name</th>
-          <th>Last Name</th>
-          <th>Employee Id</th>
-          <th>Select</th>
+          <th>{{'user.firstName' | translate}}</th>
+          <th>{{'user.lastName' | translate}}</th>
+          <th>{{'user.employeeId' | translate}}</th>
+          <th>{{'select' | translate}}</th>
         </tr>
         </thead>
         <tbody>
@@ -133,8 +136,8 @@
         No User Found
       </div>
       <div class="modal-footer">
-        <button class="btn btn-sm" (click)="bsModalRef.hide()">Submit</button>
-        <button class="btn btn-sm" (click)="bsModalRef.hide()">close</button>
+        <button class="btn btn-sm" (click)="bsModalRef.hide()">{{'button.submit' | translate}}</button>
+        <button class="btn btn-sm" (click)="bsModalRef.hide()">{{'button.close' | translate}}</button>
       </div>
     </div>
   </ng-template>

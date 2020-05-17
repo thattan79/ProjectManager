@@ -3,36 +3,44 @@
     <form #viewTaskForm="ngForm">
       <table class="table-responsive">
         <tr>
-          <td>Project:</td>
+          <td>{{'project.projectTitle' | translate}}:</td>
           <td style="padding-left: 2%; width: 43%;padding-right: 2%;">
             <input type="text" id="projectTitle" class="form-control" [ngModel]="projectDto.projectTitle"
                    #projectTitle="ngModel" readonly name="projectTitle">
           </td>
           <td>
-            <button type="submit" class="btn btn-link" (click)="listAllProjects();openModal(projectTemplate)">Search
+            <button type="submit" class="btn btn-link"
+                    (click)="listAllProjects();openModal(projectTemplate)">{{'button.search' | translate}}
             </button>
           </td>
-          <td style="padding-left: 3%; width: 14%;">Sort Task By:</td>
+          <td style="padding-left: 3%; width: 18%;">{{'sortTask' | translate}}:</td>
           <td>
-            <button type="button" style=" font-size: 12px; margin-right: 3%; padding-left: 16%; padding-right: 16%;" (click)="onSort('startDate');"  class="btn btn-primary">Start Date
-            </button>
-          </td>
-          <td style="padding-right: 20px;">&nbsp;</td>
-          <td>
-            <button type="button" class="btn btn-primary"  style=" font-size: 12px; margin-right: 3%; padding-left: 16%; padding-right: 16%;" (click)="onSort('endDate');">
-              End Date
+            <button type="button" style=" font-size: 12px; margin-right: 3%; padding-left: 16%; padding-right: 16%;"
+                    (click)="onSort('startDate');" class="btn btn-primary">{{'project.startDate' | translate}}
             </button>
           </td>
           <td style="padding-right: 20px;">&nbsp;</td>
           <td>
-            <button type="button" class="btn btn-primary"  style=" font-size: 12px; margin-right: 3%; padding-left: 16%; padding-right: 16%;" (click)="onSort('priority');">
-              Priority
+            <button type="button" class="btn btn-primary"
+                    style=" font-size: 12px; margin-right: 3%; padding-left: 16%; padding-right: 16%;"
+                    (click)="onSort('endDate');">
+              {{'project.endDate' | translate}}
             </button>
           </td>
           <td style="padding-right: 20px;">&nbsp;</td>
           <td>
-            <button type="button" class="btn btn-primary" style=" font-size: 12px; margin-right: 3%; padding-left: 16%; padding-right: 16%;" (click)="onSort('completed');">
-              Completed
+            <button type="button" class="btn btn-primary"
+                    style=" font-size: 12px; margin-right: 3%; padding-left: 16%; padding-right: 16%;"
+                    (click)="onSort('priority');">
+              {{'project.priority' | translate}}
+            </button>
+          </td>
+          <td style="padding-right: 20px;">&nbsp;</td>
+          <td>
+            <button type="button" class="btn btn-primary"
+                    style=" font-size: 12px; margin-right: 3%; padding-left: 16%; padding-right: 16%;"
+                    (click)="onSort('completed');">
+              {{'button.completed' | translate}}
             </button>
           </td>
         </tr>
@@ -43,11 +51,11 @@
       <table class="table" *ngFor="let task of taskDtos" style="table-layout: fixed;word-wrap: break-word;">
         <thead>
         <tr>
-          <th style="width:20%;">Task</th>
-          <th style="width:20%;">Parent</th>
-          <th>Priority</th>
-          <th>Start</th>
-          <th>End</th>
+          <th style="width:20%;">{{'task.name' | translate}}</th>
+          <th style="width:20%;">{{'parent' | translate}}</th>
+          <th>{{'project.priority' | translate}}</th>
+          <th>{{'start' | translate}}</th>
+          <th>{{'end' | translate}}</th>
           <th></th>
           <th></th>
         </tr>
@@ -66,13 +74,13 @@
           <td>{{task.endDate}}</td>
           <td>
             <button type="button" class="btn btn-primary" style=" font-size: 12px; margin-right: 3%;
-           padding-left: 21%; padding-right: 16%; width: 100%" (click)="onEditTask(task);">Edit
+           padding-left: 21%; padding-right: 16%; width: 100%" (click)="onEditTask(task);">{{'button.edit' | translate}}
             </button>
           </td>
           <td>
             <button type="button" class="btn btn-primary" [disabled]="task.status==='COMPLETE'"
                     style=" font-size: 12px; margin-right: 3%;
-           padding-left: 10%; padding-right: 10%; " (click)="updateTaskStatus(task);">End Task
+           padding-left: 10%; padding-right: 10%; " (click)="updateTaskStatus(task);">{{'endtask' | translate}}
             </button>
           </td>
         </tr>
@@ -108,11 +116,11 @@
       <table class="table">
         <thead>
         <tr>
-          <th>Project</th>
-          <th>Start Date</th>
-          <th>End Date</th>
-          <th>Priority</th>
-          <th>Select</th>
+          <th>{{'project.projectTitle' | translate}}</th>
+          <th>{{'project.startDate' | translate}}</th>
+          <th>{{'project.endDate' | translate}}</th>
+          <th>{{'project.priority' | translate}}</th>
+          <th>{{'select' | translate}}</th>
         </tr>
         </thead>
         <tbody>
@@ -129,8 +137,8 @@
         No Project Found
       </div>
       <div class="modal-footer">
-        <button class="btn btn-sm" (click)="displayTasks();bsModalRef.hide()">Submit</button>
-        <button class="btn btn-sm" (click)="bsModalRef.hide()">close</button>
+        <button class="btn btn-sm" (click)="displayTasks();bsModalRef.hide()">{{'button.submit' | translate}}</button>
+        <button class="btn btn-sm" (click)="bsModalRef.hide()">{{'button.close' | translate}}</button>
       </div>
     </div>
   </ng-template>

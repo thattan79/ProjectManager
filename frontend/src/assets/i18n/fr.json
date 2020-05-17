@@ -49,7 +49,9 @@
     "suspend": "SuspendF",
     "search": "SearchF",
     "submit": "SubmitF",
-    "close": "CloseF"
+    "close": "CloseF",
+    "update": "UpdateF",
+    "completed": "CompletedF"
   },
   "sort": {
     "labelBy": "Sort ByF:",
@@ -60,5 +62,13 @@
     "startDate": "Start DateF",
     "endDate": "End DateF",
     "completed": "CompletedF"
-  }
+  },
+  "startAndEndDate":"Set Start and End DateF",
+  "sortTask": "Sort Task ByF",
+  "select": "SelectF",
+  "parentTask": "ParentTaskF",
+  "start": "StartF",
+  "end": "EndF",
+  "parent": "ParentF",
+  "endtask": "End TaskF"
 }

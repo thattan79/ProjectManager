@@ -90,7 +90,7 @@
                   class="error">{{'error.startDate' | translate}}</span>
           </td>
           <td style="width:5%;">&nbsp;</td>
-          <td style="padding-top: 3%;">End Date:</td>
+          <td style="padding-top: 3%;">{{'project.endDate' | translate}}</td>
           <td style="padding-top: 2%">
             <input type="text" id="eDate" (change)="removeBorderColor();" required class="form-control"
                    [ngModel]="taskDto?.endDate" name="endDate" #endDate="ngModel" [readOnly]="parentTaskRef"
@@ -126,7 +126,7 @@
       <div style="margin-left:30%;margin-top: 3%">
         <button type="submit" [disabled]="!taskForm.valid"
                 class="btn btn-primary" style="margin-right: 2%;padding-left: 3%;padding-right: 3%;">
-          &nbsp;&nbsp;Add&nbsp;&nbsp;
+          &nbsp;&nbsp;{{'button.add' | translate}}&nbsp;&nbsp;
         </button>
         <button type="button" class="btn btn-primary" style="padding-left: 3%;padding-right: 3%;" (click)="onReset();">
           {{'button.reset' | translate}}</button>
@@ -149,7 +149,7 @@
           <th>{{'user.firstName' | translate}}</th>
           <th>{{'user.lastName' | translate}}</th>
           <th>{{'user.employeeId' | translate}}</th>
-          <th>Select</th>
+          <th>{{'select' | translate}}</th>
         </tr>
         </thead>
         <tbody>
@@ -188,7 +188,7 @@
           <th>{{'project.startDate' | translate}}</th>
           <th>{{'project.endDate' | translate}}</th>
           <th>{{'project.priority' | translate}}</th>
-          <th>Select</th>
+          <th>{{'select' | translate}}</th>
         </tr>
         </thead>
         <tbody>
@@ -224,8 +224,8 @@
       <table class="table">
         <thead>
         <tr>
-          <th>ParentTask</th>
-          <th>Select</th>
+          <th>{{'parentTask' | translate}}</th>
+          <th>{{'select' | translate}}</th>
         </tr>
         </thead>
         <tbody>
@@ -240,8 +240,8 @@
         No Parent Task Found
       </div>
       <div class="modal-footer">
-        <button class="btn btn-sm" (click)="bsModalRef.hide()">Submit</button>
-        <button class="btn btn-sm" (click)="bsModalRef.hide()">close</button>
+        <button class="btn btn-sm" (click)="bsModalRef.hide()">{{'button.submit' | translate}}</button>
+        <button class="btn btn-sm" (click)="bsModalRef.hide()">{{'button.close' | translate}}</button>
       </div>
     </div>
   </ng-template>

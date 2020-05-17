@@ -4,7 +4,7 @@
       <table class="table-responsive">
         <tr>
           <td style="padding-top: 3%;">
-            <div style="height: 40px;">Project:</div>
+            <div style="height: 40px;">{{'project.projectTitle' | translate}}:</div>
           </td>
           <td style="width: 7%;"></td>
           <td colspan="3">
@@ -16,7 +16,7 @@
 
         <tr>
           <td style="padding-top: 2%;">
-            <div style="height: 40px;">Task:</div>
+            <div style="height: 40px;">{{'task.name' | translate}}:</div>
           </td>
           <td style="width: 7%;"></td>
           <td colspan="3">
@@ -33,13 +33,13 @@
           <td colspan="3">
             <input id="checkid" [ngModel]="taskDto.isParentTask" name="parentTask" #parentTask="ngModel"
                    type="checkbox" style="width: 25px; height: 25px;" disabled/>
-            <label for="checkid" style="font-size: 108%;font-weight: normal;">Parent Task</label>
+            <label for="checkid" style="font-size: 108%;font-weight: normal;">{{'task.parentName' | translate}}</label>
           </td>
           <td></td>
         </tr>
 
         <tr>
-          <td>Priority:</td>
+          <td>{{'project.priority' | translate}}:</td>
           <td style="width: 7%;"></td>
           <td colspan="3">
             <ng5-slider [options]="options" [(ngModel)]="taskDto.priority" name="priority" #priority="ngModel"
@@ -53,7 +53,7 @@
 
         <tr>
           <td style="padding-top: 3%;">
-            <div style="height: 40px;">Parent Task:</div>
+            <div style="height: 40px;">{{'task.parentName' | translate}}:</div>
           </td>
           <td style="width: 7%;"></td>
           <td colspan="3">
@@ -65,14 +65,14 @@
           <td>
             <div style="margin-left: 70%;height: 40px;">
               <button type="button" class="btn btn-link" (click)="loadParentTask();openModal(parentTaskTemplate)">
-                Search
+                {{'button.search' | translate}}
               </button>
             </div>
           </td>
         </tr>
 
         <tr>
-          <td style="padding-top: 3%;">Start Date:</td>
+          <td style="padding-top: 3%;">{{'project.startDate' | translate}}:</td>
           <td style="width: 7%;"></td>
           <td style="padding-top: 2%">
             <input type="text" id="sDate" (change)="removeBorderColor();" required class="form-control"
@@ -81,7 +81,7 @@
             <span *ngIf="startDate.touched && startDate.errors?.required" class="error">Start Date is required</span>
           </td>
           <td style="width:5%;">&nbsp;</td>
-          <td style="padding-top: 3%;">End Date:</td>
+          <td style="padding-top: 3%;">{{'project.endDate' | translate}}:</td>
           <td style="padding-top: 2%">
             <input type="text" id="eDate" (change)="removeBorderColor();" required class="form-control"
                    [(ngModel)]="taskDto.endDate" name="endDate" #endDate="ngModel"
@@ -97,7 +97,7 @@
 
         <tr>
           <td>
-            <div style="height: 0px;">User:</div>
+            <div style="height: 0px;">{{'task.user' | translate}}:</div>
           </td>
           <td style="width: 7%;"></td>
           <td colspan="3">
@@ -110,7 +110,7 @@
       <div style="margin-left: 30%;margin-top: 3%">
         <button type="submit" [disabled]="!taskForm.valid || taskDto.status==='COMPLETE'"
                 class="btn btn-primary" style="margin-right: 2%;padding-left: 3%;padding-right: 3%;">
-          &nbsp;&nbsp;Update&nbsp;&nbsp;
+          &nbsp;&nbsp;{{'button.update' | translate}}&nbsp;&nbsp;
         </button>
       </div>
     </form>
@@ -128,8 +128,8 @@
       <table class="table">
         <thead>
         <tr>
-          <th>ParentTask</th>
-          <th>Select</th>
+          <th>{{'button.parentTask' | translate}}</th>
+          <th>{{'button.select' | translate}}</th>
         </tr>
         </thead>
         <tbody>

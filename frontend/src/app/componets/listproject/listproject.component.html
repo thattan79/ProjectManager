@@ -5,7 +5,7 @@
     <input type="text" placeholder='Search ...' class="form-control" [(ngModel)]="searchVal"/>
     <table class="table-responsive">
       <tr>
-        <td style="padding-top: 5%;">{{'sort.labelBy' | translate}}</td>
+        <td style="padding-top: 5%;width: 13%;">{{'sort.labelBy' | translate}}</td>
         <td style="width:7%;">&nbsp;</td>
         <td style="padding-top: 4%;">
           <button type="button" class="btn btn-primary" (click)="onSort('startDate');"> &nbsp;{{'sort.startDate' | translate}}&nbsp;</button>
@@ -75,7 +75,7 @@
           <tr>
             <td style="padding-top: 12%;">
               <button type="button" class="btn btn-primary" (click)="onDelete(project.projectId)"
-                      style="margin-left:35%;margin-right: 2%">&nbsp;{{'button.suspend' | translate}}&nbsp;
+                      style="margin-left:34%;width: 100%;">&nbsp;{{'button.suspend' | translate}}&nbsp;
               </button>
             </td>
           </tr>
