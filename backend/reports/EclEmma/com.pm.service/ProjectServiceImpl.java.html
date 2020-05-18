@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ProjectServiceImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">backend</a> &gt; <a href="index.source.html" class="el_package">com.pm.service</a> &gt; <span class="el_source">ProjectServiceImpl.java</span></div><h1>ProjectServiceImpl.java</h1><pre class="source lang-java linenums">package com.pm.service;
+
+import com.pm.dto.ProjectDto;
+import com.pm.dto.TaskDto;
+import com.pm.entity.Project;
+import com.pm.entity.Task;
+import com.pm.entity.User;
+import com.pm.repository.ProjectRepository;
+import com.pm.repository.UserRepository;
+import com.pm.utils.ProjectConverter;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
+@Service
+@Transactional
+<span class="fc" id="L21">public class ProjectServiceImpl implements IProjectService {</span>
+
+    @Resource
+    private ProjectRepository projectRepository;
+    @Resource
+    private ProjectConverter projectConverter;
+    @Resource
+    private UserRepository userRepository;
+
+    public ProjectDto createProject(ProjectDto projectDto) {
+<span class="fc" id="L31">        final Project project = projectConverter.createProjectFromDto(projectDto);</span>
+<span class="fc" id="L32">        Optional&lt;User&gt; userOpt = userRepository.findById(projectDto.getUserId());</span>
+<span class="fc" id="L33">        User user = null;</span>
+<span class="pc bpc" id="L34" title="1 of 2 branches missed.">        if (userOpt.isPresent()) {</span>
+<span class="fc" id="L35">            user = userOpt.get();</span>
+<span class="fc" id="L36">            project.addUser(user);</span>
+        }
+<span class="fc" id="L38">        projectRepository.save(project);</span>
+<span class="fc" id="L39">        return projectDto;</span>
+    }
+
+    public List&lt;ProjectDto&gt; findAllProjects() {
+<span class="fc" id="L43">        List&lt;ProjectDto&gt; projectDtos = projectConverter.convertProjectListToDtoList(projectRepository.findAll());</span>
+<span class="fc" id="L44">        setCountOfTask(projectDtos);</span>
+<span class="fc" id="L45">        return projectDtos;</span>
+    }
+
+    public List&lt;ProjectDto&gt; findAllProjectByInput(String input) {
+<span class="fc bfc" id="L49" title="All 2 branches covered.">        if (&quot;default&quot;.equals(input)) {</span>
+<span class="fc" id="L50">            return findAllProjects();</span>
+<span class="fc bfc" id="L51" title="All 2 branches covered.">        } else if (!&quot;undefined&quot;.equals(input)) {</span>
+<span class="fc" id="L52">            List&lt;ProjectDto&gt; projectDtos = projectConverter.convertProjectListToDtoList(projectRepository.findByProjectTitleContaining(input));</span>
+<span class="fc" id="L53">            setCountOfTask(projectDtos);</span>
+<span class="fc" id="L54">            return projectDtos;</span>
+        }
+<span class="fc" id="L56">        return new ArrayList&lt;&gt;();</span>
+    }
+
+    public ProjectDto findProjectById(Long id) {
+<span class="fc" id="L60">        Optional&lt;Project&gt; optProject = projectRepository.findById(id);</span>
+<span class="fc bfc" id="L61" title="All 2 branches covered.">        if (optProject.isPresent()) {</span>
+<span class="fc" id="L62">            return projectConverter.convertProjectToDto(optProject.get());</span>
+        }
+<span class="fc" id="L64">        return new ProjectDto();</span>
+    }
+
+    @Transactional
+    public ProjectDto deleteProject(Long id) {
+<span class="fc" id="L69">        final Optional&lt;Project&gt; optProject = projectRepository.findById(id);</span>
+<span class="fc" id="L70">        optProject.ifPresent(project -&gt; {</span>
+<span class="fc bfc" id="L71" title="All 2 branches covered.">            for (User user : project.getUsers()) {</span>
+<span class="fc" id="L72">                user.setProject(null);</span>
+<span class="fc" id="L73">                user.setTask(null);</span>
+<span class="fc" id="L74">            }</span>
+<span class="fc bfc" id="L75" title="All 2 branches covered.">            for (Task task : project.getTasks()) {</span>
+<span class="fc" id="L76">                task.setProject(null);</span>
+<span class="fc" id="L77">            }</span>
+<span class="fc" id="L78">            project.setUsers(null);</span>
+<span class="fc" id="L79">            project.setTasks(null);</span>
+<span class="fc" id="L80">            projectRepository.delete(project);</span>
+<span class="fc" id="L81">        });</span>
+<span class="fc" id="L82">        return new ProjectDto();</span>
+    }
+
+    private void setCountOfTask(List&lt;ProjectDto&gt; projectDtos) {
+<span class="fc bfc" id="L86" title="All 2 branches covered.">        for (ProjectDto projectDto : projectDtos) {</span>
+<span class="fc" id="L87">            List&lt;TaskDto&gt; taskDtos = projectDto.getTaskDtos();</span>
+<span class="pc bpc" id="L88" title="1 of 4 branches missed.">            if (taskDtos != null &amp;&amp; !taskDtos.isEmpty()) {</span>
+<span class="fc" id="L89">                projectDto.setTotalNoOfTasks(taskDtos.size());</span>
+<span class="fc" id="L90">                int noOfCompletedTasks = 0;</span>
+<span class="fc bfc" id="L91" title="All 2 branches covered.">                for (TaskDto taskDto : taskDtos) {</span>
+<span class="pc bpc" id="L92" title="1 of 2 branches missed.">                    if (&quot;COMPLETE&quot;.equals(taskDto.getStatus())) {</span>
+<span class="fc" id="L93">                        noOfCompletedTasks = noOfCompletedTasks + 1;</span>
+                    }
+<span class="fc" id="L95">                    projectDto.setTotalNoOfCompletedTasks(noOfCompletedTasks);</span>
+<span class="fc" id="L96">                }</span>
+            }
+<span class="fc" id="L98">        }</span>
+<span class="fc" id="L99">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

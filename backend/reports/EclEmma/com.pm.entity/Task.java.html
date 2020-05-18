@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Task.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">backend</a> &gt; <a href="index.source.html" class="el_package">com.pm.entity</a> &gt; <span class="el_source">Task.java</span></div><h1>Task.java</h1><pre class="source lang-java linenums">package com.pm.entity;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import javax.persistence.*;
+import java.time.LocalDate;
+
+<span class="fc" id="L13">@Setter</span>
+@Getter
+<span class="nc" id="L15">@AllArgsConstructor</span>
+<span class="fc" id="L16">@NoArgsConstructor</span>
+@Entity
+public class Task {
+    @Id
+    @SequenceGenerator(name = &quot;taskSeqGen&quot;, sequenceName = &quot;taskSeq&quot;, initialValue = 1, allocationSize = 100)
+    @GeneratedValue(generator = &quot;taskSeqGen&quot;)
+<span class="fc" id="L22">    private long taskId;</span>
+
+<span class="fc" id="L24">    private String taskName;</span>
+<span class="fc" id="L25">    private LocalDate startDate;</span>
+<span class="fc" id="L26">    private LocalDate endDate;</span>
+<span class="fc" id="L27">    private int priority;</span>
+<span class="fc" id="L28">    private String status;</span>
+
+    @ManyToOne(optional = true, fetch = FetchType.LAZY)
+    @JoinColumn(name = &quot;project_id&quot;)
+    @JsonManagedReference
+<span class="fc" id="L33">    private Project project;</span>
+
+    @OneToOne(mappedBy = &quot;task&quot;, cascade = CascadeType.ALL)
+    @JsonBackReference
+<span class="fc" id="L37">    private User user;</span>
+
+    @ManyToOne(optional = true, fetch = FetchType.LAZY)
+    @JoinColumn(name = &quot;parent_id&quot;)
+    @JsonManagedReference
+<span class="fc" id="L42">    private ParentTask parentTask;</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

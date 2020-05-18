@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TaskServiceImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">backend</a> &gt; <a href="index.source.html" class="el_package">com.pm.service</a> &gt; <span class="el_source">TaskServiceImpl.java</span></div><h1>TaskServiceImpl.java</h1><pre class="source lang-java linenums">package com.pm.service;
+
+import com.pm.dto.*;
+import com.pm.entity.*;
+import com.pm.repository.*;
+import com.pm.utils.TaskConverter;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
+@Service
+<span class="fc" id="L17">@Slf4j</span>
+@Transactional
+<span class="fc" id="L19">public class TaskServiceImpl implements ITaskService {</span>
+
+    @Resource
+    private TaskRepository taskRepository;
+    @Resource
+    private UserRepository userRepository;
+    @Resource
+    private ProjectRepository projectRepository;
+    @Resource
+    private ParentTaskRepository parentTaskRepository;
+    @Resource
+    private TaskConverter taskConverter;
+
+    public ParentTask createParentTask(ParentTaskDto parentTaskDto) {
+<span class="fc" id="L33">        final ParentTask parentTask = new ParentTask();</span>
+<span class="fc" id="L34">        parentTask.setParentTaskName(parentTaskDto.getParentTaskName());</span>
+<span class="fc" id="L35">        parentTaskRepository.save(parentTask);</span>
+<span class="fc" id="L36">        return parentTask;</span>
+    }
+
+    public List&lt;ParentTask&gt; findAllParentTasks() {
+<span class="fc" id="L40">        return parentTaskRepository.findAll();</span>
+    }
+
+    public TaskDto createTask(TaskDto taskDto) {
+<span class="fc" id="L44">        log.info(&quot;-createTask-&quot;);</span>
+<span class="fc" id="L45">        return saveTask(taskDto);</span>
+    }
+
+    public TaskDto updateTaskStatus(TaskDto taskDto) {
+<span class="fc" id="L49">        log.info(&quot;-updateTaskStatus-&quot;);</span>
+<span class="fc" id="L50">        Optional&lt;Task&gt; optTask = taskRepository.findById(taskDto.getTaskId());</span>
+<span class="fc bfc" id="L51" title="All 2 branches covered.">        if (optTask.isPresent()) {</span>
+<span class="fc" id="L52">            final Task task = optTask.get();</span>
+<span class="fc" id="L53">            task.setStatus(&quot;COMPLETE&quot;);</span>
+<span class="fc" id="L54">            taskRepository.save(task);</span>
+<span class="fc" id="L55">            return taskConverter.convertTaskToDto(task);</span>
+        }
+<span class="fc" id="L57">        return null;</span>
+    }
+
+    public TaskDto updateTask(TaskDto taskDto) {
+<span class="fc" id="L61">        log.info(&quot;-updateTask-&quot;);</span>
+<span class="pc bpc" id="L62" title="1 of 2 branches missed.">        if (taskDto.getTaskId() &gt; 0) {</span>
+<span class="fc" id="L63">            Optional&lt;Task&gt; optTask = taskRepository.findById(taskDto.getTaskId());</span>
+<span class="pc bpc" id="L64" title="1 of 2 branches missed.">            if (optTask.isPresent()) {</span>
+<span class="fc" id="L65">                final Task task = optTask.get();</span>
+<span class="fc" id="L66">                task.setTaskName(taskDto.getTaskName());</span>
+<span class="fc" id="L67">                task.setStartDate(taskDto.getStartDate());</span>
+<span class="fc" id="L68">                task.setEndDate(taskDto.getEndDate());</span>
+<span class="fc" id="L69">                task.setPriority(taskDto.getPriority());</span>
+<span class="fc" id="L70">                taskRepository.save(task);</span>
+            }
+        }
+<span class="fc" id="L73">        return taskDto;</span>
+    }
+
+    public List&lt;ParentTask&gt; findAllParentTasksByInput(String input) {
+<span class="fc bfc" id="L77" title="All 2 branches covered.">        if (&quot;default&quot;.equals(input)) {</span>
+<span class="fc" id="L78">            return findAllParentTasks();</span>
+        }
+<span class="fc" id="L80">        return parentTaskRepository.findByParentTaskNameContaining(input);</span>
+    }
+
+    private TaskDto saveTask(TaskDto taskDto) {
+<span class="fc" id="L84">        List&lt;Task&gt; allTasks = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L85">        final Task task = taskConverter.createTaskFromDto(taskDto);</span>
+
+<span class="fc" id="L87">        Optional&lt;ParentTask&gt; optParentTask = parentTaskRepository.findById(taskDto.getParentTaskId());</span>
+<span class="pc bpc" id="L88" title="1 of 2 branches missed.">        if (optParentTask.isPresent()) {</span>
+<span class="fc" id="L89">            final ParentTask parentTask = optParentTask.get();</span>
+<span class="fc" id="L90">            task.setParentTask(parentTask);</span>
+<span class="fc" id="L91">            parentTask.setTasks(allTasks);</span>
+        }
+<span class="fc" id="L93">        allTasks.add(task);</span>
+
+<span class="fc" id="L95">        Project project = null;</span>
+<span class="fc" id="L96">        Optional&lt;Project&gt; optProject = projectRepository.findById(taskDto.getProjectId());</span>
+<span class="pc bpc" id="L97" title="1 of 2 branches missed.">        if (optProject.isPresent()) {</span>
+<span class="fc" id="L98">            project = optProject.get();</span>
+<span class="fc" id="L99">            task.setProject(project);</span>
+<span class="fc" id="L100">            project.setTasks(allTasks);</span>
+        }
+
+<span class="fc" id="L103">        User user = null;</span>
+<span class="fc" id="L104">        Optional&lt;User&gt; optUser = userRepository.findById(taskDto.getUserId());</span>
+<span class="pc bpc" id="L105" title="1 of 2 branches missed.">        if (optUser.isPresent()) {</span>
+<span class="fc" id="L106">            user = optUser.get();</span>
+<span class="fc" id="L107">            task.setUser(user);</span>
+<span class="fc" id="L108">            user.setTask(task);</span>
+        }
+
+<span class="pc bpc" id="L111" title="2 of 4 branches missed.">        if (project != null &amp;&amp; user != null) {</span>
+<span class="fc" id="L112">            user.setProject(project);</span>
+        }
+<span class="fc" id="L114">        taskRepository.save(task);</span>
+<span class="fc" id="L115">        return taskDto;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

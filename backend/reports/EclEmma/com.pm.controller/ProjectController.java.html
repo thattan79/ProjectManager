@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ProjectController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">backend</a> &gt; <a href="index.source.html" class="el_package">com.pm.controller</a> &gt; <span class="el_source">ProjectController.java</span></div><h1>ProjectController.java</h1><pre class="source lang-java linenums">package com.pm.controller;
+
+import com.pm.dto.*;
+import com.pm.service.IProjectService;
+import org.springframework.web.bind.annotation.*;
+
+import javax.annotation.Resource;
+import java.util.List;
+
+@RestController
+@CrossOrigin
+@RequestMapping(&quot;/project&quot;)
+<span class="fc" id="L13">public class ProjectController {</span>
+
+    @Resource
+    private IProjectService projectServiceImpl;
+
+    @PostMapping(&quot;/create&quot;)
+    public ProjectDto createProject(@RequestBody ProjectDto projectDto) {
+<span class="fc" id="L20">        return projectServiceImpl.createProject(projectDto);</span>
+    }
+
+    @GetMapping(&quot;/findAllProjects&quot;)
+    public List&lt;ProjectDto&gt; findAllProjects() {
+<span class="fc" id="L25">        return projectServiceImpl.findAllProjects();</span>
+    }
+
+    @GetMapping(&quot;/findAllProjectByInput/{input}&quot;)
+    public List&lt;ProjectDto&gt; findAllProjectByInput(@PathVariable(&quot;input&quot;) String input) {
+<span class="fc" id="L30">        return projectServiceImpl.findAllProjectByInput(input);</span>
+    }
+
+    @GetMapping(&quot;/findProjectById/{id}&quot;)
+    public ProjectDto findProjectById(@PathVariable(&quot;id&quot;) Long id) {
+<span class="fc" id="L35">        return projectServiceImpl.findProjectById(id);</span>
+    }
+
+    @PostMapping(&quot;/delete&quot;)
+    public ProjectDto deleteProject(@RequestBody Long id) {
+<span class="fc" id="L40">        return projectServiceImpl.deleteProject(id);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

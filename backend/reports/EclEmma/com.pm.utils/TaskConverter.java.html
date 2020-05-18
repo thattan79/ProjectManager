@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TaskConverter.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">backend</a> &gt; <a href="index.source.html" class="el_package">com.pm.utils</a> &gt; <span class="el_source">TaskConverter.java</span></div><h1>TaskConverter.java</h1><pre class="source lang-java linenums">package com.pm.utils;
+
+import com.pm.dto.ParentTaskDto;
+import com.pm.dto.ProjectDto;
+import com.pm.dto.TaskDto;
+import com.pm.dto.UserDto;
+import com.pm.entity.ParentTask;
+import com.pm.entity.Project;
+import com.pm.entity.Task;
+import com.pm.entity.User;
+import org.springframework.stereotype.Component;
+
+import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
+@Component
+<span class="fc" id="L19">public class TaskConverter {</span>
+
+    @Resource
+    private UserConverter userConverter;
+    @Resource
+    private ProjectConverter projectConverter;
+
+    public Task createTaskFromDto(TaskDto taskDto) {
+<span class="fc" id="L27">        final Task task = new Task();</span>
+<span class="fc" id="L28">        task.setTaskName(taskDto.getTaskName());</span>
+<span class="fc" id="L29">        task.setStartDate(taskDto.getStartDate());</span>
+<span class="fc" id="L30">        task.setEndDate(taskDto.getEndDate());</span>
+<span class="fc" id="L31">        task.setPriority(taskDto.getPriority());</span>
+<span class="fc" id="L32">        task.setStatus(taskDto.getStatus());</span>
+<span class="fc" id="L33">        task.setStatus(&quot;START&quot;);</span>
+<span class="pc bpc" id="L34" title="1 of 2 branches missed.">        if (taskDto.getTaskId() &gt; 0) {</span>
+<span class="fc" id="L35">            task.setTaskId(taskDto.getTaskId());</span>
+        }
+<span class="fc" id="L37">        return task;</span>
+    }
+
+    public List&lt;TaskDto&gt; convertTaskListToDtoList(List&lt;Task&gt; tasks) {
+<span class="fc" id="L41">        List&lt;TaskDto&gt; taskDtos = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L42">        tasks.stream().map(task -&gt; {</span>
+<span class="fc" id="L43">            final TaskDto taskDto = new TaskDto();</span>
+<span class="fc" id="L44">            taskDto.setEndDate(task.getEndDate());</span>
+<span class="fc" id="L45">            taskDto.setStartDate(task.getStartDate());</span>
+<span class="fc" id="L46">            taskDto.setPriority(task.getPriority());</span>
+<span class="fc" id="L47">            taskDto.setTaskName(task.getTaskName());</span>
+<span class="fc" id="L48">            taskDto.setStatus(task.getStatus());</span>
+<span class="fc" id="L49">            taskDto.setTaskId(task.getTaskId());</span>
+<span class="fc" id="L50">            ParentTask parentTask = task.getParentTask();</span>
+<span class="pc bpc" id="L51" title="1 of 2 branches missed.">            if (parentTask != null) {</span>
+<span class="nc" id="L52">                final ParentTaskDto dto = new ParentTaskDto();</span>
+<span class="nc" id="L53">                dto.setParentId(parentTask.getParentId());</span>
+<span class="nc" id="L54">                dto.setParentTaskName(parentTask.getParentTaskName());</span>
+<span class="nc" id="L55">                taskDto.setParentTaskDto(dto);</span>
+            }
+<span class="fc" id="L57">            User user = task.getUser();</span>
+<span class="pc bpc" id="L58" title="1 of 2 branches missed.">            if (user != null) {</span>
+<span class="fc" id="L59">                final UserDto userDto = userConverter.convertUserToDto(user);</span>
+<span class="fc" id="L60">                taskDto.setUserDto(userDto);</span>
+            }
+
+<span class="fc" id="L63">            Project project = task.getProject();</span>
+<span class="pc bpc" id="L64" title="1 of 2 branches missed.">            if (project != null) {</span>
+<span class="fc" id="L65">                final ProjectDto projectDto = projectConverter.convertProjectToDto(project);</span>
+<span class="fc" id="L66">                taskDto.setProjectDto(projectDto);</span>
+            }
+<span class="fc" id="L68">            taskDtos.add(taskDto);</span>
+<span class="fc" id="L69">            return taskDtos;</span>
+<span class="fc" id="L70">        }).collect(Collectors.toList());</span>
+<span class="fc" id="L71">        return taskDtos;</span>
+    }
+
+    public TaskDto convertTaskToDto(Task task) {
+<span class="fc" id="L75">        final TaskDto taskDto = new TaskDto();</span>
+<span class="fc" id="L76">        taskDto.setTaskName(task.getTaskName());</span>
+<span class="fc" id="L77">        taskDto.setStartDate(task.getStartDate());</span>
+<span class="fc" id="L78">        taskDto.setEndDate(task.getEndDate());</span>
+<span class="fc" id="L79">        taskDto.setPriority(task.getPriority());</span>
+<span class="fc" id="L80">        taskDto.setStatus(task.getStatus());</span>
+<span class="pc bpc" id="L81" title="1 of 2 branches missed.">        if (task.getTaskId() &gt; 0) {</span>
+<span class="fc" id="L82">            taskDto.setTaskId(task.getTaskId());</span>
+        }
+<span class="fc" id="L84">        return taskDto;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

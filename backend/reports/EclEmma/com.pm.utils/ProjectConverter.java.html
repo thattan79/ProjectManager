@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ProjectConverter.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">backend</a> &gt; <a href="index.source.html" class="el_package">com.pm.utils</a> &gt; <span class="el_source">ProjectConverter.java</span></div><h1>ProjectConverter.java</h1><pre class="source lang-java linenums">package com.pm.utils;
+
+
+import com.pm.dto.ProjectDto;
+import com.pm.dto.TaskDto;
+import com.pm.dto.UserDto;
+import com.pm.entity.Project;
+import com.pm.entity.User;
+import org.springframework.stereotype.Component;
+
+import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
+@Component
+<span class="fc" id="L17">public class ProjectConverter {</span>
+
+    @Resource
+    private TaskConverter taskConverter;
+
+    @Resource
+    private UserConverter userConverter;
+
+    public Project createProjectFromDto(ProjectDto projectDto) {
+<span class="fc" id="L26">        final Project project = new Project();</span>
+<span class="fc" id="L27">        project.setProjectTitle(projectDto.getProjectTitle());</span>
+<span class="fc" id="L28">        project.setStartDate(projectDto.getStartDate());</span>
+<span class="fc" id="L29">        project.setEndDate(projectDto.getEndDate());</span>
+<span class="fc" id="L30">        project.setPriority(projectDto.getPriority());</span>
+<span class="pc bpc" id="L31" title="1 of 2 branches missed.">        if (projectDto.getProjectId() &gt; 0) {</span>
+<span class="fc" id="L32">            project.setProjectId(projectDto.getProjectId());</span>
+        }
+<span class="fc" id="L34">        return project;</span>
+    }
+
+    public ProjectDto convertProjectToDto(Project project) {
+<span class="fc" id="L38">        final ProjectDto projectDto = new ProjectDto();</span>
+<span class="fc" id="L39">        projectDto.setProjectTitle(project.getProjectTitle());</span>
+<span class="fc" id="L40">        projectDto.setStartDate(project.getStartDate());</span>
+<span class="fc" id="L41">        projectDto.setEndDate(project.getEndDate());</span>
+<span class="fc" id="L42">        projectDto.setPriority(project.getPriority());</span>
+<span class="pc bpc" id="L43" title="1 of 2 branches missed.">        if (project.getProjectId() &gt; 0) {</span>
+<span class="fc" id="L44">            projectDto.setProjectId(project.getProjectId());</span>
+        }
+<span class="fc" id="L46">        List&lt;User&gt; users = project.getUsers();</span>
+<span class="pc bpc" id="L47" title="2 of 4 branches missed.">        if (users != null &amp;&amp; !users.isEmpty()) {</span>
+<span class="fc" id="L48">            List&lt;UserDto&gt; userDtos = userConverter.convertUserListToDtoList(users);</span>
+<span class="fc" id="L49">            projectDto.setUserDtos(userDtos);</span>
+        }
+<span class="fc" id="L51">        return projectDto;</span>
+    }
+
+    public List&lt;ProjectDto&gt; convertProjectListToDtoList(List&lt;Project&gt; projects) {
+<span class="fc" id="L55">        List&lt;ProjectDto&gt; projectDtos = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L56">        projects.stream().map(project -&gt; {</span>
+<span class="fc" id="L57">            final ProjectDto projectDto = new ProjectDto();</span>
+<span class="fc" id="L58">            projectDto.setProjectTitle(project.getProjectTitle());</span>
+<span class="fc" id="L59">            projectDto.setStartDate(project.getStartDate());</span>
+<span class="fc" id="L60">            projectDto.setEndDate(project.getEndDate());</span>
+<span class="fc" id="L61">            projectDto.setPriority(project.getPriority());</span>
+<span class="pc bpc" id="L62" title="1 of 2 branches missed.">            if (project.getProjectId() &gt; 0) {</span>
+<span class="fc" id="L63">                projectDto.setProjectId(project.getProjectId());</span>
+            }
+<span class="pc bpc" id="L65" title="2 of 4 branches missed.">            if (project.getTasks() != null &amp;&amp; !project.getTasks().isEmpty()) {</span>
+<span class="fc" id="L66">                List&lt;TaskDto&gt; taskDtos = taskConverter.convertTaskListToDtoList(project.getTasks());</span>
+<span class="fc" id="L67">                projectDto.setTaskDtos(taskDtos);</span>
+            }
+<span class="fc" id="L69">            projectDtos.add(projectDto);</span>
+<span class="fc" id="L70">            return projectDtos;</span>
+<span class="fc" id="L71">        }).collect(Collectors.toList());</span>
+<span class="fc" id="L72">        return projectDtos;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>
