@@ -62,7 +62,7 @@ export class ListuserComponent implements OnChanges {
       (userDto: UserDto) => {
         userDto.firstName = '';
         userDto.lastName = '';
-        userDto.employeeId = '';
+        userDto.employeeId = null;
         userDto.edit = false;
         this.userService.usersEmitter.emit(userDto)
       }

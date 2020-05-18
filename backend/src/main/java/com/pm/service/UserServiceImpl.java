@@ -2,6 +2,7 @@ package com.pm.service;
 
 import com.pm.dto.UserDto;
 import com.pm.entity.User;
+import com.pm.exception.UserException;
 import com.pm.repository.UserRepository;
 import com.pm.utils.UserConverter;
 import lombok.extern.slf4j.Slf4j;
@@ -24,7 +25,11 @@ public class UserServiceImpl implements IUserService {
 
     public UserDto createUser(UserDto userDto) {
         log.info("-createUser-");
-        final User user = userConverter.convertUserDtoToUser(userDto);
+        User user = userRepository.findByEmployeeId(userDto.getEmployeeId());
+        if (user != null) {
+            throw new UserException("Employee Id already exists");
+        }
+        user = userConverter.convertUserDtoToUser(userDto);
         userRepository.save(user);
         return userDto;
     }

@@ -14,6 +14,7 @@ export class AdduserComponent implements OnInit {
   @ViewChild('userForm') userForm: NgForm;
   userDto: UserDto;
   edit: boolean = false;
+  userExist: boolean;
 
   constructor(private router: Router,
               private route: ActivatedRoute,
@@ -35,6 +36,10 @@ export class AdduserComponent implements OnInit {
         this.userDto = userDto;
         this.userForm.reset();
         this.edit = false;
+        this.userExist = false;
+      },
+      error => {
+        this.userExist = true;
       }
     );
   }

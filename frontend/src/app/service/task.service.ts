@@ -1,43 +1,43 @@
-import {EventEmitter, Injectable, Output} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from "rxjs";
 import {TaskDto} from "../dto/task.dto";
 import {ParentTaskDto} from "../dto/parent-task.dto";
+import {environment} from "../../environments/environment";
 
 @Injectable({
   providedIn: 'root'
 })
 export class TaskService {
 
-  public taskEmitter: EventEmitter<string> = new EventEmitter<string>();
-
+  projectHttpUrl: string = environment.apiUrl + '/task/';
   taskDto: TaskDto;
 
   constructor(private http: HttpClient) {
   }
 
   createTask(taskDto: TaskDto): Observable<TaskDto> {
-    return this.http.post<TaskDto>('http://localhost:8081/task/create', taskDto);
+    return this.http.post<TaskDto>(this.projectHttpUrl + 'create', taskDto);
   }
 
   updateTask(taskDto: TaskDto): Observable<TaskDto> {
-    return this.http.post<TaskDto>('http://localhost:8081/task/update', taskDto);
+    return this.http.post<TaskDto>(this.projectHttpUrl + 'update', taskDto);
   }
 
   updateTaskStatus(taskDto: TaskDto): Observable<TaskDto> {
-    return this.http.post<TaskDto>('http://localhost:8081/task/updateTaskStatus', taskDto);
+    return this.http.post<TaskDto>(this.projectHttpUrl + 'updateTaskStatus', taskDto);
   }
 
   createParentTask(parentTaskDto: ParentTaskDto): Observable<ParentTaskDto> {
-    return this.http.post<ParentTaskDto>('http://localhost:8081/task/createParent', parentTaskDto);
+    return this.http.post<ParentTaskDto>(this.projectHttpUrl + 'createParent', parentTaskDto);
   }
 
   findAllParent(): Observable<ParentTaskDto[]> {
-    return this.http.get<ParentTaskDto[]>('http://localhost:8081/task/findAllParent');
+    return this.http.get<ParentTaskDto[]>(this.projectHttpUrl + 'findAllParent');
   }
 
   findAllParentTasksByInput(input: string): Observable<ParentTaskDto[]> {
-    return this.http.get<ParentTaskDto[]>('http://localhost:8081/task/findAllParentTasksByInput/' + input);
+    return this.http.get<ParentTaskDto[]>(this.projectHttpUrl + 'findAllParentTasksByInput/' + input);
   }
 
   setTaskDto(taskDto: TaskDto) {

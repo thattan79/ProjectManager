@@ -145,7 +145,7 @@ public class TaskServiceImplTest {
         final User user = new User();
         user.setFirstName("Test");
         user.setLastName("Test");
-        user.setEmployeeId("123");
+        user.setEmployeeId(123l);
         return user;
     }
 }

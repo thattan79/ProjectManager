@@ -36,7 +36,7 @@ public class UserConverterTest {
         final User user = new User();
         user.setFirstName("Test");
         user.setLastName("Test");
-        user.setEmployeeId("123");
+        user.setEmployeeId(123l);
         return user;
     }
 
@@ -45,7 +45,7 @@ public class UserConverterTest {
         userDto.setUserId(1);
         userDto.setFirstName("Test");
         userDto.setLastName("Test");
-        userDto.setEmployeeId("123");
+        userDto.setEmployeeId(123l);
         return userDto;
     }
 }

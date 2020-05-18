@@ -17,7 +17,7 @@ public class User {
     private long userId;
     private String firstName;
     private String lastName;
-    private String employeeId;
+    private long employeeId;
 
     @ManyToOne(optional = true, fetch = FetchType.LAZY)
     @JsonManagedReference

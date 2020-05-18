@@ -11,7 +11,7 @@ import javax.annotation.Resource;
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:4200/", maxAge = 3600)
+@CrossOrigin
 @RequestMapping("/task")
 @Transactional
 public class TaskController {

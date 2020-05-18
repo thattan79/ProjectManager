@@ -4,6 +4,7 @@ import com.pm.dto.ProjectDto;
 import com.pm.dto.TaskDto;
 import com.pm.dto.UserDto;
 import com.pm.entity.Project;
+import com.pm.entity.Task;
 import com.pm.entity.User;
 import com.pm.repository.ProjectRepository;
 import com.pm.repository.UserRepository;
@@ -88,7 +89,7 @@ public class ProjectServiceImplTest {
 
     @Test
     public void deleteProjectIdExist() {
-        when(projectRepository.findById(anyLong())).thenReturn(Optional.of(mockProject()));
+        when(projectRepository.findById(anyLong())).thenReturn(Optional.of(mockProjectWithUserandTask()));
         doNothing().when(projectRepository).delete(isA(Project.class));
         assertNotNull(projectServiceImpl.deleteProject(10L));
     }
@@ -97,7 +98,7 @@ public class ProjectServiceImplTest {
         final User user = new User();
         user.setFirstName("Test");
         user.setLastName("Test");
-        user.setEmployeeId("123");
+        user.setEmployeeId(123l);
         return user;
     }
 
@@ -105,7 +106,7 @@ public class ProjectServiceImplTest {
         final UserDto userDto = new UserDto();
         userDto.setFirstName("Test");
         userDto.setLastName("Test");
-        userDto.setEmployeeId("123");
+        userDto.setEmployeeId(123l);
         return userDto;
     }
 
@@ -128,6 +129,17 @@ public class ProjectServiceImplTest {
         projectDto.setUserId(1);
         projectDto.setTaskDtos(Arrays.asList(mockTaskDto()));
         return projectDto;
+    }
+
+    private Project mockProjectWithUserandTask() {
+        final Project project = new Project();
+        project.setProjectTitle("Test");
+        project.setStartDate(LocalDate.now());
+        project.setEndDate(LocalDate.now());
+        project.setPriority(1);
+        project.setUsers(Arrays.asList(new User()));
+        project.setTasks(Arrays.asList(new Task()));
+        return project;
     }
 
     private Project mockProject() {

@@ -41,8 +41,8 @@ export class UserSortService {
     } else {
       return this.userDtos.sort(
         (user1: UserDto, user2: UserDto) => {
-          let user1EmployeeID = +user1.employeeId;
-          let user2EmployeeID = +user2.employeeId;
+          let user1EmployeeID = user1.employeeId;
+          let user2EmployeeID = user2.employeeId;
           if (user1EmployeeID > user2EmployeeID) {
             return 1;
           }

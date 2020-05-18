@@ -34,12 +34,22 @@
           <td>{{'user.employeeId' | translate}}</td>
           <td>
             <input type="number" name="employeeId" class="form-control" required #employeeId="ngModel"
-                   [(ngModel)]="userDto.employeeId" style="margin-left:10%;width: 100%;">
+                   [(ngModel)]="userDto.employeeId"
+                   [ngStyle]="{'border': userExist ? '1px solid red':''}"
+                   style="margin-left:10%;width: 100%;">
           </td>
         </tr>
         <tr *ngIf="employeeId.touched && employeeId.invalid">
           <td></td>
           <td class="error">{{'error.employeeId' | translate}}</td>
+        </tr>
+        <tr *ngIf="userExist">
+          <td></td>
+          <td>
+            <span class="error" style="padding-left:9%; padding-top: 5%;">
+              {{'userExist' | translate}}
+            </span>
+          </td>
         </tr>
       </table>
       <div style="margin-left: 40%;margin-top: 3%">

@@ -2,6 +2,7 @@ package com.pm.service;
 
 import com.pm.dto.UserDto;
 import com.pm.entity.User;
+import com.pm.exception.UserException;
 import com.pm.repository.UserRepository;
 import com.pm.utils.UserConverter;
 import org.junit.Test;
@@ -30,14 +31,23 @@ public class UserServiceImplTest {
     private UserConverter userConverter;
 
     @Test
-    public void createUser() {
+    public void createUserEmployeeIdExist() {
         final UserDto userDto = mockUserDto();
         final User user = mockUser();
+        when(userRepository.findByEmployeeId(anyLong())).thenReturn(null);
         when(userConverter.convertUserDtoToUser(userDto)).thenReturn(user);
         when(userRepository.save(any())).thenReturn(mockUser());
         userServiceImpl.createUser(userDto);
         verify(userRepository, times(1)).save(any());
         verify(userConverter, times(1)).convertUserDtoToUser(any());
+    }
+
+    @Test(expected = UserException.class)
+    public void createUser() {
+        final UserDto userDto = mockUserDto();
+        final User user = mockUser();
+        when(userRepository.findByEmployeeId(anyLong())).thenReturn(user);
+        userServiceImpl.createUser(userDto);
     }
 
     @Test
@@ -114,7 +124,7 @@ public class UserServiceImplTest {
         final User user = new User();
         user.setFirstName("Test");
         user.setLastName("Test");
-        user.setEmployeeId("123");
+        user.setEmployeeId(123l);
         return user;
     }
 
@@ -122,7 +132,7 @@ public class UserServiceImplTest {
         final UserDto userDto = new UserDto();
         userDto.setFirstName("Test");
         userDto.setLastName("Test");
-        userDto.setEmployeeId("123");
+        userDto.setEmployeeId(123l);
         return userDto;
     }
 

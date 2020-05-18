@@ -150,7 +150,7 @@ public class UserControllerTest {
         final UserDto userDto = new UserDto();
         userDto.setFirstName("Test");
         userDto.setLastName("Test");
-        userDto.setEmployeeId("123");
+        userDto.setEmployeeId(123l);
         return userDto;
     }
 }
